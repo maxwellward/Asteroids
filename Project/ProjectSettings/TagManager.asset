@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - DestroyBullet
+  - TeleportPlayer
   layers:
   - Default
   - TransparentFX

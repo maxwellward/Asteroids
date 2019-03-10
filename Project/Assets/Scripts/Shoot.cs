@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public float speed;         
+    public float speed;
+
+    float xLoc;
+    float yLoc;
+
+
 
     void Update()
     {
@@ -13,22 +18,22 @@ public class Shoot : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-
+        Debug.Log("entered");
         if(col.gameObject.tag == "DestroyBullet")
         {
             transform.position = gameObject.transform.position * -1;
             StartCoroutine("DestroyBullet");
-
-            
         }
 
     }
+
+
 
     IEnumerator DestroyBullet()
     {
         while (true)
         {
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(0.3f);
             Destroy(gameObject);
         }
     }
