@@ -12,16 +12,6 @@ public class PlayerManager : MonoBehaviour
     public float topSpeed;
     public Rigidbody2D player;
 
-    public GameObject topTriggerPlayer;
-    public GameObject bottomTriggerPlayer;
-    public GameObject leftTriggerPlayer;
-    public GameObject rightTriggerPlayer;
-
-    /*public GameObject topTriggerBullet;
-    public GameObject bottomTriggerBullet;
-    public GameObject leftTriggerBullet;
-    public GameObject rightTriggerBullet;*/
-
 
     // Update is called once per frame
     void Update()
@@ -66,21 +56,6 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-/*    IEnumerator RemoveCollidersPlayer()
-    {
-        topTriggerPlayer.GetComponent<Collider2D>().enabled = false;
-        bottomTriggerPlayer.GetComponent<Collider2D>().enabled = false;
-        rightTriggerPlayer.GetComponent<Collider2D>().enabled = false;
-        leftTriggerPlayer.GetComponent<Collider2D>().enabled = false;
-
-        yield return new WaitForSeconds(1f);
-
-        topTriggerPlayer.GetComponent<Collider2D>().enabled = true;
-        bottomTriggerPlayer.GetComponent<Collider2D>().enabled = true;
-        rightTriggerPlayer.GetComponent<Collider2D>().enabled = true;
-        leftTriggerPlayer.GetComponent<Collider2D>().enabled = true;
-
-    }*/
 
     void Shoot()
     {
@@ -91,35 +66,4 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
-
-/*    IEnumerator RemoveCollidersBullets()
-    {
-        topTriggerBullet.GetComponent<Collider2D>().enabled = false;
-        bottomTriggerBullet.GetComponent<Collider2D>().enabled = false;
-        rightTriggerBullet.GetComponent<Collider2D>().enabled = false;
-        leftTriggerBullet.GetComponent<Collider2D>().enabled = false;
-
-        yield return new WaitForSeconds(0.3f);
-
-        topTriggerBullet.GetComponent<Collider2D>().enabled = true;
-        bottomTriggerBullet.GetComponent<Collider2D>().enabled = true;
-        rightTriggerBullet.GetComponent<Collider2D>().enabled = true;
-        leftTriggerBullet.GetComponent<Collider2D>().enabled = true;
-
-    }*/
-
-    // This is a part of the old movement system, I'm leaving it here in case it's needed at a later date.
-    /*void FaceMouse()
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        Vector2 direction = new Vector2(
-            mousePosition.x - transform.position.x,
-            mousePosition.y - transform.position.y
-            );
-
-        transform.up = direction;
-
-    }*/
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
+
+
     public float speed;
 
     float xLoc;
@@ -30,8 +32,9 @@ public class Shoot : MonoBehaviour
         if (col.gameObject.tag == "Asteroid")
         {
             Debug.Log("hit asteriod, nice shot... idiot");
-            Destroy(col.gameObject);
             Destroy(this.gameObject);
+            Destroy(col.gameObject);
+            BreakAsteroid();
         }
     }
 
@@ -44,6 +47,14 @@ public class Shoot : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             Destroy(gameObject);
         }
+    }
+
+
+// ENEMY DESTROY MANAGEMENT
+
+    void BreakAsteroid()
+    {
+        
     }
 
 }
