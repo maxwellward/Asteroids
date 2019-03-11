@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DestroyBullet
   - TeleportPlayer
+  - TeleportEnemy
   layers:
   - Default
   - TransparentFX
