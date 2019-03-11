@@ -53,12 +53,12 @@ public class PlayerManager : MonoBehaviour
             player.velocity = player.velocity.normalized * topSpeed;
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
 
         if (col.gameObject.tag == "TeleportPlayer")
         {
-            StartCoroutine("RemoveCollidersPlayer");
+            //StartCoroutine("RemoveCollidersPlayer");
             transform.position = gameObject.transform.position * -1;
         }
 
@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    IEnumerator RemoveCollidersPlayer()
+/*    IEnumerator RemoveCollidersPlayer()
     {
         topTriggerPlayer.GetComponent<Collider2D>().enabled = false;
         bottomTriggerPlayer.GetComponent<Collider2D>().enabled = false;
@@ -80,7 +80,7 @@ public class PlayerManager : MonoBehaviour
         rightTriggerPlayer.GetComponent<Collider2D>().enabled = true;
         leftTriggerPlayer.GetComponent<Collider2D>().enabled = true;
 
-    }
+    }*/
 
     void Shoot()
     {

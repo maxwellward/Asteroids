@@ -16,15 +16,23 @@ public class Shoot : MonoBehaviour
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("entered");
         if(col.gameObject.tag == "DestroyBullet")
         {
             transform.position = gameObject.transform.position * -1;
             StartCoroutine("DestroyBullet");
         }
-
+    }
+        
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Asteroid")
+        {
+            Debug.Log("hit asteriod, nice shot... idiot");
+            Destroy(col.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 
 

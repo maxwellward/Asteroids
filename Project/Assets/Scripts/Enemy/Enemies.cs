@@ -53,19 +53,19 @@ public class Enemies : MonoBehaviour
         Vector2 spawnPointRight = new Vector2(Random.Range(xMinR, xMaxR), Random.Range(yMinR, yMaxR));
         Vector2 spawnPointLeft = new Vector2(Random.Range(xMinL, xMaxL), Random.Range(yMinL, yMaxL));
 
-        if(side == 1)
+        if (side == 1)
         {
-            Instantiate(asteroidOne, spawnPointTop, Quaternion.Euler(new Vector3(0, 0, Random.Range(-70, 70))));   
+            Instantiate(asteroidOne, spawnPointTop, Quaternion.Euler(new Vector3(0, 0, Random.Range(-70, 70))));
         }
-        else if(side == 2)
+        else if (side == 2)
         {
             Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(110, 240))));
         }
-        else if(side == 3)
+        else if (side == 3)
         {
             Instantiate(asteroidOne, spawnPointRight, Quaternion.Euler(new Vector3(0, 0, Random.Range(-120, -35))));
         }
-        else if(side == 4)
+        else if (side == 4)
         {
             Instantiate(asteroidOne, spawnPointLeft, Quaternion.Euler(new Vector3(0, 0, Random.Range(120, 35))));
         }
