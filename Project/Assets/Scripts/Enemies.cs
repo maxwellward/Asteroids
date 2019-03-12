@@ -26,7 +26,7 @@ public class Enemies : MonoBehaviour
     float yMaxL = -3.5f;
 
     public float speed = 5;
-    float side;
+    public static float side;
     Vector2 spawnPoint;
 
     //Asteroids
