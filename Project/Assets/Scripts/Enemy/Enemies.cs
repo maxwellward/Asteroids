@@ -59,15 +59,15 @@ public class Enemies : MonoBehaviour
         }
         else if (side == 2)
         {
-            Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(110, 240))));
+            Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(-110, -240))));
         }
         else if (side == 3)
         {
-            Instantiate(asteroidOne, spawnPointRight, Quaternion.Euler(new Vector3(0, 0, Random.Range(-120, -35))));
+            Instantiate(asteroidOne, spawnPointRight, Quaternion.Euler(new Vector3(0, 0, Random.Range(120, 35))));
         }
         else if (side == 4)
         {
-            Instantiate(asteroidOne, spawnPointLeft, Quaternion.Euler(new Vector3(0, 0, Random.Range(120, 35))));
+            Instantiate(asteroidOne, spawnPointLeft, Quaternion.Euler(new Vector3(0, 0, Random.Range(-120, -35))));
         }
     }
 }

@@ -9,10 +9,6 @@ public class EnemyAddForce : MonoBehaviour
 
     void Update()
     {
-        if (Enemies.side = 2)
-        {
-
-        }
-        transform.Translate(-Vector2.up * speed * Time.deltaTime);
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 }

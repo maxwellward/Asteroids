@@ -250,11 +250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca5a6cd0249fa942825d1cd31a10a65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
   bulletPrefab: {fileID: 787600862514211482, guid: 6ef07068c3258c54294396b421947ced,
     type: 3}
   shootLoc: {fileID: 373710355}
-  thrust: 1.5
+  thrust: 1
   topSpeed: 2
   player: {fileID: 250127546}
 --- !u!212 &250127544
