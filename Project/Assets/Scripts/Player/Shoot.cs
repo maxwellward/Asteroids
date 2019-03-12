@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
+
+
     public float speed;
 
     float xLoc;
@@ -16,15 +18,24 @@ public class Shoot : MonoBehaviour
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("entered");
         if(col.gameObject.tag == "DestroyBullet")
         {
             transform.position = gameObject.transform.position * -1;
             StartCoroutine("DestroyBullet");
         }
-
+    }
+        
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Asteroid")
+        {
+            Debug.Log("hit asteriod, nice shot... idiot");
+            Destroy(this.gameObject);
+            Destroy(col.gameObject);
+            BreakAsteroid();
+        }
     }
 
 
@@ -36,6 +47,14 @@ public class Shoot : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             Destroy(gameObject);
         }
+    }
+
+
+// ENEMY DESTROY MANAGEMENT
+
+    void BreakAsteroid()
+    {
+        
     }
 
 }

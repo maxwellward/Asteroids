@@ -5,25 +5,25 @@ using UnityEngine;
 public class Enemies : MonoBehaviour
 {
 
-    float xMinT = -6f;
-    float xMaxT = 6f;
+    float xMinT = -4f;
+    float xMaxT = 4f;
     float yMinT = 3f;
     float yMaxT = 3.5f;
 
-    float xMinB = -6f;
-    float xMaxB = 6f;
+    float xMinB = -4f;
+    float xMaxB = 4f;
     float yMinB = -3f;
     float yMaxB = -3.5f;
 
     float xMinR = 6.09f;
     float xMaxR = 6.12f;
-    float yMinR = 3f;
-    float yMaxR = -3f;
+    float yMinR = 2f;
+    float yMaxR = -2f;
 
-    float xMinL = -6.09f;
-    float xMaxL = -6.12f;
-    float yMinL = 3f;
-    float yMaxL = -3.5f;
+    float xMinL = -5.5f;
+    float xMaxL = -5.6f;
+    float yMinL = -2f;
+    float yMaxL = 2f;
 
     public float speed = 5;
     public static float side;
@@ -37,11 +37,13 @@ public class Enemies : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            side = Random.Range(1, 2);
+            side = Random.Range(1, 5);
             print(side);
             SpawnEnemy();
         }
     }
+
+
 
     void SpawnEnemy()
     {
@@ -51,21 +53,21 @@ public class Enemies : MonoBehaviour
         Vector2 spawnPointRight = new Vector2(Random.Range(xMinR, xMaxR), Random.Range(yMinR, yMaxR));
         Vector2 spawnPointLeft = new Vector2(Random.Range(xMinL, xMaxL), Random.Range(yMinL, yMaxL));
 
-        if(side == 1)
+        if (side == 1)
         {
-            Instantiate(asteroidOne, spawnPointTop, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));   
+            Instantiate(asteroidOne, spawnPointTop, Quaternion.Euler(new Vector3(0, 0, Random.Range(-70, 70))));
         }
-        else if(side == 2)
+        else if (side == 2)
         {
-            Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
+            Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(110, 240))));
         }
-        else if(side == 3)
+        else if (side == 3)
         {
-            Instantiate(asteroidOne, spawnPointRight, Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360))));
+            Instantiate(asteroidOne, spawnPointRight, Quaternion.Euler(new Vector3(0, 0, Random.Range(-120, -35))));
         }
-        else if(side == 4)
+        else if (side == 4)
         {
-            Instantiate(asteroidOne, spawnPointLeft, Quaternion.Euler(new Vector3(0, 0, Random.Range(-90, 35))));
+            Instantiate(asteroidOne, spawnPointLeft, Quaternion.Euler(new Vector3(0, 0, Random.Range(120, 35))));
         }
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - DestroyBullet
   - TeleportPlayer
+  - TeleportEnemy
+  - Asteroid
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Asteroids
   - 
   - 
   - 
