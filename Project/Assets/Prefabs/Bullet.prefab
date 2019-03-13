@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2926196075045198873}
   - component: {fileID: 4716180198517963793}
   - component: {fileID: 2904689891017269082}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 787600862514211482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.690001, y: 10.65, z: 1}
-  m_LocalScale: {x: 0.05, y: 0.075, z: 0.05}
+  m_LocalScale: {x: 0.025, y: 0.0375, z: 0.025}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -116,6 +116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  asteroidTwo: {fileID: 6028116805021440756, guid: efbaa2ef6f86c06429f8387cbe4b3723,
+    type: 3}
+  asteroidThree: {fileID: 6028116805021440756, guid: 83b0d893c10f14f45891ef9978d4fa63,
+    type: 3}
 --- !u!60 &2904689891017269082
 PolygonCollider2D:
   m_ObjectHideFlags: 0

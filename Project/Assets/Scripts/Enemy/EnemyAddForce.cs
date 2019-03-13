@@ -11,4 +11,14 @@ public class EnemyAddForce : MonoBehaviour
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
+
+    /*public void OnDestroy()
+    {
+        Debug.Log("Object destroyed");
+
+        if (gameObject.tag == "Asteroid")
+        {
+            Debug.Log("Asteroid");
+        }
+    }*/
 }

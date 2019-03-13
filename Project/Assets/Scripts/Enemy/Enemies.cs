@@ -32,13 +32,13 @@ public class Enemies : MonoBehaviour
     //Asteroids
 
     public GameObject asteroidOne;
+    
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
             side = Random.Range(1, 5);
-            print(side);
             SpawnEnemy();
         }
     }
@@ -70,4 +70,6 @@ public class Enemies : MonoBehaviour
             Instantiate(asteroidOne, spawnPointLeft, Quaternion.Euler(new Vector3(0, 0, Random.Range(-120, -35))));
         }
     }
+
+    
 }

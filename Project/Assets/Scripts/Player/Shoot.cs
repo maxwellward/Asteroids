@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
 
+    
 
     public float speed;
 
@@ -31,12 +32,34 @@ public class Shoot : MonoBehaviour
     {
         if (col.gameObject.tag == "Asteroid")
         {
-            Debug.Log("hit asteriod, nice shot... idiot");
             Destroy(this.gameObject);
             Destroy(col.gameObject);
+
+            objectName = col.gameObject.name;
+
+            asteroid = col.gameObject;
+
             BreakAsteroid();
         }
+        else if (col.gameObject.tag == "AsteroidSmall")
+        {
+            Destroy(this.gameObject);
+            Destroy(col.gameObject);
+
+            objectName = col.gameObject.name;
+
+            asteroid = col.gameObject;
+
+            BreakAsteroidSmall();
+        }
+        else if (col.gameObject.tag == "AsteroidTiny")
+        {
+            Destroy(this.gameObject);
+            Destroy(col.gameObject);
+        }
     }
+
+
 
 
 
@@ -50,11 +73,34 @@ public class Shoot : MonoBehaviour
     }
 
 
-// ENEMY DESTROY MANAGEMENT
+    // ENEMY DESTROY MANAGEMENT
+
+    string objectName;
+    GameObject asteroid;
+
+    public GameObject asteroidTwo;
+    public GameObject asteroidThree;
+
+    Vector3 asteroidPosition;
 
     void BreakAsteroid()
     {
-        
+        asteroidPosition = asteroid.transform.position;
+
+        Debug.Log(asteroidPosition);
+
+        Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+    }
+
+    void BreakAsteroidSmall()
+    {
+        asteroidPosition = asteroid.transform.position;
+
+        Debug.Log(asteroidPosition);
+
+        Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
     }
 
 }
