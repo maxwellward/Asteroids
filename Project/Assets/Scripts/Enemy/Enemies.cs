@@ -55,11 +55,11 @@ public class Enemies : MonoBehaviour
 
         if (side == 1)
         {
-            Instantiate(asteroidOne, spawnPointTop, Quaternion.Euler(new Vector3(0, 0, Random.Range(-70, 70))));
+            Instantiate(asteroidOne, spawnPointTop, Quaternion.Euler(new Vector3(0, 0, Random.Range(135, 240))));
         }
         else if (side == 2)
         {
-            Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(-110, -240))));
+            Instantiate(asteroidOne, spawnPointBottom, Quaternion.Euler(new Vector3(0, 0, Random.Range(40, -30))));
         }
         else if (side == 3)
         {
