@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -54,12 +55,18 @@ public class PlayerManager : MonoBehaviour
    
     }
 
+    public GameObject scoreText;
+    public GameObject gameOverPanel;
+
     void OnCollisionEnter2D(Collision2D col)
     {
 
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
             Destroy(this.gameObject);
+            Time.timeScale = 0;
+            scoreText.SetActive(false);
+            gameOverPanel.SetActive(true);
         }
 
 

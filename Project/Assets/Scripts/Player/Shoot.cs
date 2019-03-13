@@ -56,6 +56,7 @@ public class Shoot : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(col.gameObject);
+            score = score + 3;
         }
     }
 
@@ -83,12 +84,16 @@ public class Shoot : MonoBehaviour
 
     Vector3 asteroidPosition;
 
+    public static int score;
+
     void BreakAsteroid()
     {
         asteroidPosition = asteroid.transform.position;
 
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+
+        score = score + 1;
     }
 
     void BreakAsteroidSmall()
@@ -97,6 +102,8 @@ public class Shoot : MonoBehaviour
 
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+
+        score = score + 2;
     }
 
 }
