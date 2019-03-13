@@ -32,7 +32,11 @@ public class Enemies : MonoBehaviour
     //Asteroids
 
     public GameObject asteroidOne;
-    
+
+    void Start()
+    {
+        StartCoroutine("SpawnEnemyTimer");
+    }
 
     void Update()
     {
@@ -43,7 +47,18 @@ public class Enemies : MonoBehaviour
         }
     }
 
+    public float minWait;
+    public float maxWait;
 
+    IEnumerator SpawnEnemyTimer()
+    {
+        while (true)
+        {
+            side = Random.Range(1, 5);
+            SpawnEnemy();
+            yield return new WaitForSeconds(Random.Range(minWait, maxWait));
+        }
+    }
 
     void SpawnEnemy()
     {
