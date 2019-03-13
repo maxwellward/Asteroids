@@ -51,11 +51,20 @@ public class PlayerManager : MonoBehaviour
             //StartCoroutine("RemoveCollidersPlayer");
             transform.position = gameObject.transform.position * -1;
         }
+   
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+
+        if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
+        {
+            Destroy(this.gameObject);
+        }
 
 
 
     }
-
 
     void Shoot()
     {

@@ -87,8 +87,6 @@ public class Shoot : MonoBehaviour
     {
         asteroidPosition = asteroid.transform.position;
 
-        Debug.Log(asteroidPosition);
-
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
     }
@@ -96,8 +94,6 @@ public class Shoot : MonoBehaviour
     void BreakAsteroidSmall()
     {
         asteroidPosition = asteroid.transform.position;
-
-        Debug.Log(asteroidPosition);
 
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));

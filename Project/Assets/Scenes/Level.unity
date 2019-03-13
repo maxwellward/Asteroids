@@ -838,6 +838,8 @@ MonoBehaviour:
   speed: 5
   asteroidOne: {fileID: 6028116805021440756, guid: ab2af573d672672489be5c969183b0f1,
     type: 3}
+  minWait: 5
+  maxWait: 10
 --- !u!4 &1557304988
 Transform:
   m_ObjectHideFlags: 0
