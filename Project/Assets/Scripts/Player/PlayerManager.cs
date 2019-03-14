@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
+    bool gameOver;
+
     public float speed;
     public GameObject bulletPrefab;
     public Transform shootLoc;
@@ -18,7 +20,15 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         Fire();
-        Movement();
+        if (gameOver == true)
+        {
+            return;
+        }
+        else
+        {
+            Movement();
+        }
+        
     }
 
     void Movement()
@@ -72,6 +82,7 @@ public class PlayerManager : MonoBehaviour
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
             Time.timeScale = 0;
+            gameOver = true;
             StartCoroutine("BlinkPlayer");
         }
     }
