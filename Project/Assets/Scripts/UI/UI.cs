@@ -7,6 +7,7 @@ public class UI : MonoBehaviour
 {
     public Text scoreText;
 
+
     void Update()
     {
         scoreText.text = "Score: " + Shoot.score;

@@ -17,8 +17,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //FaceMouse();
-        Shoot();
+        Fire();
         Movement();
     }
 
@@ -57,6 +56,8 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject scoreText;
     public GameObject gameOverPanel;
+    public Text endScoreText;
+    public GameObject endScoreTextOBJ;
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -66,6 +67,10 @@ public class PlayerManager : MonoBehaviour
             Destroy(this.gameObject);
             Time.timeScale = 0;
             scoreText.SetActive(false);
+
+            endScoreTextOBJ.SetActive(true);
+            endScoreText.text = "Score: " + Shoot.score;
+
             gameOverPanel.SetActive(true);
         }
 
@@ -73,7 +78,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    void Shoot()
+    void Fire()
     {
 
         if (Input.GetKeyDown(KeyCode.Space))
