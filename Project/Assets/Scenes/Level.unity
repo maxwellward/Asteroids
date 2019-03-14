@@ -261,6 +261,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 988100321}
   endScoreText: {fileID: 2103967832}
   endScoreTextOBJ: {fileID: 2103967830}
+  playerObject: {fileID: 250127542}
 --- !u!212 &250127544
 SpriteRenderer:
   m_ObjectHideFlags: 0

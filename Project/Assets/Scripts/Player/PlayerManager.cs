@@ -59,25 +59,52 @@ public class PlayerManager : MonoBehaviour
     public Text endScoreText;
     public GameObject endScoreTextOBJ;
 
+    public GameObject playerObject;
+
+
+    // PLAYER DEATH
+
+    GameObject asteroidHit;
+
     void OnCollisionEnter2D(Collision2D col)
     {
 
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
-            Destroy(this.gameObject);
             Time.timeScale = 0;
-            scoreText.SetActive(false);
+            StartCoroutine("BlinkPlayer");
+        }
+    }
 
-            endScoreTextOBJ.SetActive(true);
-            endScoreText.text = "Score: " + Shoot.score;
 
-            gameOverPanel.SetActive(true);
+    int loops;
+
+    IEnumerator BlinkPlayer()
+    {
+        player.GetComponent<Renderer>().enabled = false;
+
+        while (loops < 5)
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+            player.GetComponent<Renderer>().enabled = true;
+            yield return new WaitForSecondsRealtime(0.5f);
+            player.GetComponent<Renderer>().enabled = false;
+
+            loops++;
         }
 
+        Destroy(this.gameObject);
 
+        scoreText.SetActive(false);
+
+        endScoreTextOBJ.SetActive(true);
+        endScoreText.text = "Score: " + Shoot.score;
+
+        gameOverPanel.SetActive(true);
 
     }
 
+    // SHOOTING
     void Fire()
     {
 
