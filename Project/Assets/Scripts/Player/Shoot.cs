@@ -40,6 +40,7 @@ public class Shoot : MonoBehaviour
             asteroid = col.gameObject;
 
             BreakAsteroid();
+            OnHit();
         }
         else if (col.gameObject.tag == "AsteroidSmall")
         {
@@ -51,12 +52,13 @@ public class Shoot : MonoBehaviour
             asteroid = col.gameObject;
 
             BreakAsteroidSmall();
+            OnHit();
         }
         else if (col.gameObject.tag == "AsteroidTiny")
         {
             Destroy(this.gameObject);
             Destroy(col.gameObject);
-            score = score + 3;
+            OnHit();
         }
     }
 
@@ -70,6 +72,7 @@ public class Shoot : MonoBehaviour
         {
             yield return new WaitForSeconds(0.3f);
             Destroy(gameObject);
+            OnMiss();
         }
     }
 
@@ -84,7 +87,7 @@ public class Shoot : MonoBehaviour
 
     Vector3 asteroidPosition;
 
-    public static int score;
+    public static float score;
 
     void BreakAsteroid()
     {
@@ -93,7 +96,6 @@ public class Shoot : MonoBehaviour
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
-        score = score + 1;
     }
 
     void BreakAsteroidSmall()
@@ -103,7 +105,22 @@ public class Shoot : MonoBehaviour
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
-        score = score + 2;
     }
 
+
+    public static float scoreToGive;
+
+
+    void OnHit()
+    {
+        score = (score + scoreToGive);
+        scoreToGive = Mathf.RoundToInt(scoreToGive * 1.3f);
+        Debug.Log("Hit " + scoreToGive);
+    }
+
+    void OnMiss()
+    {
+        scoreToGive = Mathf.RoundToInt(scoreToGive / 1.3f);
+        Debug.Log("Missed " + scoreToGive);
+    }
 }

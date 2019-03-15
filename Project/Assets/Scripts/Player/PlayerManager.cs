@@ -15,6 +15,10 @@ public class PlayerManager : MonoBehaviour
     public float topSpeed;
     public Rigidbody2D player;
 
+    private void Start()
+    {
+        Shoot.scoreToGive = 100f;
+    }
 
     // Update is called once per frame
     void Update()
