@@ -7,35 +7,45 @@ public class PlayerManager : MonoBehaviour
 {
 
 
-    bool gameOver;
+
 
     public float speed;
     public GameObject bulletPrefab;
     public Transform shootLoc;
 
-    public float thrust;
-    public float topSpeed;
-    public Rigidbody2D player;
+    
+    public Rigidbody2D player; // A refrence to the player object.
 
+    // Start is run on game start.
     private void Start()
     {
+        // Sets the score to give to 100, which can then be modified by missing or hitting shots.
         Shoot.scoreToGive = 100f;
     }
 
-    // Update is called once per frame
+    // Update is called every frame, so these functions are run and checked every frame (60 times a second usually).
+    // Checks if the player is firing, and if they're allowed to move at the end of the game.
+
+    bool gameOver; // True or false, is the game over? aka. has the player died?
+
     void Update()
     {
         Fire();
-        if (gameOver == true)
+        if (gameOver == true) // Check if the game is over
         {
-            return;
+            return; // Do nothing
         }
         else
         {
-            Movement();
+            Movement(); // Run the movement checks
         }
         
     }
+
+    // Player movement
+
+    public float thrust; // How much force is used when you press up arrow.
+    public float topSpeed; // The maximum speed that the player can go.
 
     void Movement()
     {
@@ -59,6 +69,8 @@ public class PlayerManager : MonoBehaviour
             player.velocity = player.velocity.normalized * topSpeed;
     }
 
+
+// Teleport player when they leave the arena
     void OnTriggerExit2D(Collider2D col)
     {
 
@@ -70,15 +82,15 @@ public class PlayerManager : MonoBehaviour
    
     }
 
+
+    // PLAYER DEATH
+
     public GameObject scoreText;
     public GameObject gameOverPanel;
     public Text endScoreText;
     public GameObject endScoreTextOBJ;
 
     public GameObject playerObject;
-
-
-    // PLAYER DEATH
 
     GameObject asteroidHit;
 
