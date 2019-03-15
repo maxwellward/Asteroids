@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
+
+
     bool gameOver;
 
     public float speed;

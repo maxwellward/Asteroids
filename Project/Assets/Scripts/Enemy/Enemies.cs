@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-
     float xMinT = -4f;
     float xMaxT = 4f;
     float yMinT = 3f;
@@ -42,6 +41,7 @@ public class Enemies : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
+            explosionParticles.Play();
             side = Random.Range(1, 5);
             SpawnEnemy();
         }
@@ -86,5 +86,13 @@ public class Enemies : MonoBehaviour
         }
     }
 
-    
+    public GameObject particleObject;
+    public ParticleSystem explosionParticles;
+
+    public void DisplayParticles()
+    {
+        particleObject.transform.position = Shoot.asteroidPosition;
+        explosionParticles.Play();
+    }
+
 }

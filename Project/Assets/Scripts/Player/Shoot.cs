@@ -85,13 +85,22 @@ public class Shoot : MonoBehaviour
     public GameObject asteroidTwo;
     public GameObject asteroidThree;
 
-    Vector3 asteroidPosition;
-
+    public static Vector3 asteroidPosition;
+    
     public static float score;
+
+    private Enemies enemyScript;
+
+    void Start()
+    {
+        enemyScript = FindObjectOfType<Enemies>();
+    }
 
     void BreakAsteroid()
     {
         asteroidPosition = asteroid.transform.position;
+
+
 
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
@@ -113,6 +122,7 @@ public class Shoot : MonoBehaviour
 
     void OnHit()
     {
+        enemyScript.DisplayParticles();
         score = (score + scoreToGive);
         scoreToGive = Mathf.RoundToInt(scoreToGive * 1.3f);
         Debug.Log("Hit " + scoreToGive);
