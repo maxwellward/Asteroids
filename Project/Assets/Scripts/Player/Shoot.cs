@@ -56,6 +56,8 @@ public class Shoot : MonoBehaviour
         }
         else if (col.gameObject.tag == "AsteroidTiny")
         {
+            asteroid = col.gameObject;
+            asteroidPosition = asteroid.transform.position;
             Destroy(this.gameObject);
             Destroy(col.gameObject);
             OnHit();
