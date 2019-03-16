@@ -32,8 +32,13 @@ public class Enemies : MonoBehaviour
 
     public GameObject asteroidOne;
 
+    private Enemies enemyScript;
+    private Shoot shootScript;
+
     void Start()
     {
+        shootScript = FindObjectOfType<Shoot>();
+
         side = Random.Range(1, 5);
         SpawnEnemy();
         minWait = 10;
@@ -98,6 +103,32 @@ public class Enemies : MonoBehaviour
     {
         particleObject.transform.position = Shoot.asteroidPosition;
         explosionParticles.Play();
+    }
+
+
+    // LEVEL MANAGEMENT
+    public int kills;
+    int level;
+
+    void CheckLevel()
+    {
+        if (kills >= 10 && level < 1)
+        {
+
+            Debug.Log("level 1 reached");
+
+            level++;
+
+            Enemies.minWait = 1;
+            Enemies.maxWait = 2;
+
+            kills = 0;
+
+        } else if (kills >= 15 && level == 1)
+        {
+            level++;
+            Debug.Log("level 2 reached");
+        }
     }
 
 }

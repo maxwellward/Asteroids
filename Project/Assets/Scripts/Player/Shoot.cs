@@ -5,7 +5,12 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
 
-    
+    private Enemies enemyScript;
+
+    void Start()
+    {
+        enemyScript = FindObjectOfType<Enemies>();
+    }
 
     public float speed;
 
@@ -20,12 +25,12 @@ public class Shoot : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            kills = kills + 9;
-            Debug.Log("Kills " + kills);
+            Enemies.kills = Enemies.kills + 9;
+            Debug.Log("Kills " + Enemies.kills);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            kills = kills + 14;
+            Enemies.kills = Enemies.kills + 14;
             Debug.Log("Kills " + kills);
         }
     }
@@ -39,7 +44,7 @@ public class Shoot : MonoBehaviour
         }
     }
 
-    int kills;
+    
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -55,8 +60,8 @@ public class Shoot : MonoBehaviour
             BreakAsteroid();
             OnHit();
 
-            kills++;
-            CheckLevel();
+            Enemies.kills++;
+            Enemies.CheckLevel();
         }
         else if (col.gameObject.tag == "AsteroidSmall")
         {
@@ -80,28 +85,7 @@ public class Shoot : MonoBehaviour
         }
     }
 
-    int level;
 
-    void CheckLevel()
-    {
-        if (kills >= 10 && level < 1)
-        {
-
-            Debug.Log("level 1 reached");
-
-            level++;
-
-            Enemies.minWait = 1;
-            Enemies.maxWait = 2;
-
-            kills = 0;
-
-        } else if (kills >= 15 && level == 1)
-        {
-            level++;
-            Debug.Log("level 2 reached");
-        }
-    }
 
 
 
@@ -128,12 +112,7 @@ public class Shoot : MonoBehaviour
     
     public static float score;
 
-    private Enemies enemyScript;
 
-    void Start()
-    {
-        enemyScript = FindObjectOfType<Enemies>();
-    }
 
     void BreakAsteroid()
     {
