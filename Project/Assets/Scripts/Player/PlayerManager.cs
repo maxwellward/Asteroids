@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
-
-
-
-
     public float speed;
     public GameObject bulletPrefab;
     public Transform shootLoc;
@@ -68,7 +64,6 @@ public class PlayerManager : MonoBehaviour
         if (player.velocity.magnitude > topSpeed)
             player.velocity = player.velocity.normalized * topSpeed;
     }
-
 
 // Teleport player when they leave the arena
     void OnTriggerExit2D(Collider2D col)

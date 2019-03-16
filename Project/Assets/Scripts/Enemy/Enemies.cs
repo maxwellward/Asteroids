@@ -34,7 +34,12 @@ public class Enemies : MonoBehaviour
 
     void Start()
     {
+        side = Random.Range(1, 5);
+        SpawnEnemy();
+        minWait = 10;
+        maxWait = 16;
         StartCoroutine("SpawnEnemyTimer");
+        
     }
 
     void Update()
@@ -47,16 +52,16 @@ public class Enemies : MonoBehaviour
         }
     }
 
-    public float minWait;
-    public float maxWait;
+    public static float minWait;
+    public static float maxWait;
 
     IEnumerator SpawnEnemyTimer()
     {
         while (true)
         {
+            yield return new WaitForSeconds(Random.Range(minWait, maxWait));
             side = Random.Range(1, 5);
             SpawnEnemy();
-            yield return new WaitForSeconds(Random.Range(minWait, maxWait));
         }
     }
 

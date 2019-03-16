@@ -254,9 +254,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 787600862514211482, guid: 6ef07068c3258c54294396b421947ced,
     type: 3}
   shootLoc: {fileID: 373710355}
+  player: {fileID: 250127546}
   thrust: 1
   topSpeed: 2
-  player: {fileID: 250127546}
   scoreText: {fileID: 1006951641}
   gameOverPanel: {fileID: 988100321}
   endScoreText: {fileID: 2103967832}
@@ -1306,8 +1306,6 @@ MonoBehaviour:
   speed: 5
   asteroidOne: {fileID: 6028116805021440756, guid: ab2af573d672672489be5c969183b0f1,
     type: 3}
-  minWait: 5
-  maxWait: 10
   particleObject: {fileID: 1948643619}
   explosionParticles: {fileID: 1948643621}
 --- !u!4 &1557304988
@@ -1672,7 +1670,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
