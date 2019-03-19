@@ -25,13 +25,13 @@ public class Shoot : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Enemies.kills = Enemies.kills + 9;
-            Debug.Log("Kills " + Enemies.kills);
+            //Enemies.kills = Enemies.kills + 9;
+            //Debug.Log("Kills " + Enemies.kills);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Enemies.kills = Enemies.kills + 14;
-            Debug.Log("Kills " + kills);
+            //Enemies.kills = Enemies.kills + 14;
+            //Debug.Log("Kills " + kills);
         }
     }
 
@@ -60,8 +60,8 @@ public class Shoot : MonoBehaviour
             BreakAsteroid();
             OnHit();
 
-            Enemies.kills++;
-            Enemies.CheckLevel();
+   //         Enemies.kills++;
+//            Enemies.CheckLevel();
         }
         else if (col.gameObject.tag == "AsteroidSmall")
         {
