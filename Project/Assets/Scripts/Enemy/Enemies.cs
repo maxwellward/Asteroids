@@ -41,8 +41,8 @@ public class Enemies : MonoBehaviour
 
         side = Random.Range(1, 5);
         SpawnEnemy();
-        minWait = 10;
-        maxWait = 16;
+        minWait = 6;
+        maxWait = 8;
         StartCoroutine("SpawnEnemyTimer");
         
     }
@@ -55,10 +55,16 @@ public class Enemies : MonoBehaviour
             side = Random.Range(1, 5);
             SpawnEnemy();
         }
+
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    kills = kills + 10;
+        //    Debug.Log(kills);
+        //}
     }
 
-    public static float minWait;
-    public static float maxWait;
+    public float minWait;
+    public float maxWait;
 
     IEnumerator SpawnEnemyTimer()
     {
@@ -107,7 +113,7 @@ public class Enemies : MonoBehaviour
 
 
     // LEVEL MANAGEMENT
-    public int kills;
+    /* public int kills;
     int level;
 
     void CheckLevel()
@@ -119,8 +125,8 @@ public class Enemies : MonoBehaviour
 
             level++;
 
-            Enemies.minWait = 1;
-            Enemies.maxWait = 2;
+            minWait = 1;
+            maxWait = 2;
 
             kills = 0;
 
@@ -130,5 +136,5 @@ public class Enemies : MonoBehaviour
             Debug.Log("level 2 reached");
         }
     }
-
+*/
 }

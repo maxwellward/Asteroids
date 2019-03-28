@@ -1306,6 +1306,8 @@ MonoBehaviour:
   speed: 5
   asteroidOne: {fileID: 6028116805021440756, guid: ab2af573d672672489be5c969183b0f1,
     type: 3}
+  minWait: 6
+  maxWait: 8
   particleObject: {fileID: 1948643619}
   explosionParticles: {fileID: 1948643621}
 --- !u!4 &1557304988
