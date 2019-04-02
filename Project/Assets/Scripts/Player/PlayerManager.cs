@@ -12,11 +12,25 @@ public class PlayerManager : MonoBehaviour
     
     public Rigidbody2D player; // A refrence to the player object.
 
+    public GameObject startPanel;
+    public GameObject scorePanel;
     // Start is run on game start.
     private void Start()
     {
+        Time.timeScale = 0;
+        player.GetComponent<Renderer>().enabled = false;
+        scorePanel.SetActive(false);
+        startPanel.SetActive(true);
         // Sets the score to give to 100, which can then be modified by missing or hitting shots.
         Shoot.scoreToGive = 100f;
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1;
+        player.GetComponent<Renderer>().enabled = true;
+        scorePanel.SetActive(true);
+        startPanel.SetActive(false);
     }
 
     // Update is called every frame, so these functions are run and checked every frame (60 times a second usually).

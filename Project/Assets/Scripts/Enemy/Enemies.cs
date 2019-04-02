@@ -6,12 +6,12 @@ public class Enemies : MonoBehaviour
 {
     float xMinT = -4f;
     float xMaxT = 4f;
-    float yMinT = 3f;
+    float yMinT = 3.3f;
     float yMaxT = 3.5f;
 
     float xMinB = -4f;
     float xMaxB = 4f;
-    float yMinB = -3f;
+    float yMinB = -3.3f;
     float yMaxB = -3.5f;
 
     float xMinR = 6.09f;
@@ -68,6 +68,8 @@ public class Enemies : MonoBehaviour
 
     IEnumerator SpawnEnemyTimer()
     {
+        yield return new WaitForSeconds(2f);
+
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(minWait, maxWait));
