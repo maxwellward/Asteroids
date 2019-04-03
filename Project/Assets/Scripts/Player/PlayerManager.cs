@@ -33,6 +33,48 @@ public class PlayerManager : MonoBehaviour
         startPanel.SetActive(false);
     }
 
+    public void RestartGame()
+    {
+        Shoot.score = 0;
+        Time.timeScale = 1;
+        player.GetComponent<Renderer>().enabled = true;
+        gameOverPanel.SetActive(false);
+        DestroyAll();
+    }
+
+    void DestroyAll()
+    {
+        GameObject [] foundEnemies = GameObject.FindGameObjectsWithTag("Asteroid");
+
+	    if(foundEnemies.Length != 0)
+	    {
+		    foreach( GameObject asteroidToDestroy in foundEnemies)
+		    {
+		    	Destroy(asteroidToDestroy);
+		    }
+	    }
+
+        GameObject [] foundEnemiesSmall = GameObject.FindGameObjectsWithTag("AsteroidSmall");
+
+	    if(foundEnemiesSmall.Length != 0)
+	    {
+		    foreach( GameObject smallAsteroidToDestroy in foundEnemiesSmall)
+		    {
+		    	Destroy(smallAsteroidToDestroy);
+		    }
+	    }
+
+        GameObject [] foundEnemiesTiny = GameObject.FindGameObjectsWithTag("AsteroidTiny");
+
+	    if(foundEnemiesSmall.Length != 0)
+	    {
+		    foreach( GameObject tinyAsteroidToDestroy in foundEnemiesTiny)
+		    {
+		    	Destroy(tinyAsteroidToDestroy);
+		    }
+	    }
+    }
+
     // Update is called every frame, so these functions are run and checked every frame (60 times a second usually).
     // Checks if the player is firing, and if they're allowed to move at the end of the game.
 
@@ -40,6 +82,11 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            DestroyAll();
+        }
+
         Fire();
         if (gameOver == true) // Check if the game is over
         {
@@ -130,8 +177,6 @@ public class PlayerManager : MonoBehaviour
 
             loops++;
         }
-
-        Destroy(this.gameObject);
 
         scoreText.SetActive(false);
 

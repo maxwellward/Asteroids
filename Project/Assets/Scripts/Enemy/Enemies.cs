@@ -40,7 +40,6 @@ public class Enemies : MonoBehaviour
         shootScript = FindObjectOfType<Shoot>();
 
         side = Random.Range(1, 5);
-        SpawnEnemy();
         minWait = 6;
         maxWait = 8;
         StartCoroutine("SpawnEnemyTimer");
@@ -51,7 +50,6 @@ public class Enemies : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            explosionParticles.Play();
             side = Random.Range(1, 5);
             SpawnEnemy();
         }
@@ -69,6 +67,8 @@ public class Enemies : MonoBehaviour
     IEnumerator SpawnEnemyTimer()
     {
         yield return new WaitForSeconds(2f);
+
+        SpawnEnemy();
 
         while (true)
         {
