@@ -39,6 +39,14 @@ public class PlayerManager : MonoBehaviour
         Time.timeScale = 1;
         player.GetComponent<Renderer>().enabled = true;
         gameOverPanel.SetActive(false);
+
+        Vector3 restartPosition = new Vector3(0, 0, 0);
+        player.transform.position = (restartPosition);
+        player.transform.rotation = Quaternion.Euler(restartPosition.x, restartPosition.y, restartPosition.z);
+
+        player.velocity = Vector3.zero;
+        player.angularVelocity = 0;
+        
         DestroyAll();
     }
 
