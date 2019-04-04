@@ -247,4 +247,35 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
+
+
+    // BACK TO MENU BUTTON
+
+    public void ReturnToMenu()
+    {
+        gameOverPanel.SetActive(false);
+        startPanel.SetActive(true);
+
+        Shoot.score = 0;
+        
+
+        Vector3 restartPosition = new Vector3(0, 0, 0);
+        player.transform.position = (restartPosition);
+        player.transform.rotation = Quaternion.Euler(restartPosition.x, restartPosition.y, restartPosition.z);
+
+        player.velocity = Vector3.zero;
+        player.angularVelocity = 0;
+
+        enemyScript = FindObjectOfType<Enemies>();
+        enemyScript.StopParticles();
+
+        gameOver = false;
+        scoreText.SetActive(true);
+        Shoot.scoreToGive = 100f;
+        
+        loops = 0;
+
+        DestroyAll();
+    }
+
 }
