@@ -35,9 +35,12 @@ public class Enemies : MonoBehaviour
     private Enemies enemyScript;
     private Shoot shootScript;
 
+    private PlayerManager playerScript;
+
     void Start()
     {
         shootScript = FindObjectOfType<Shoot>();
+        
 
         side = Random.Range(1, 5);
         minWait = 6;

@@ -111,9 +111,9 @@ public class PlayerManager : MonoBehaviour
     // Checks if the player is firing, and if they're allowed to move at the end of the game.
 
     bool gameOver; // True or false, is the game over? aka. has the player died?
-
     void Update()
     {
+
         if(Input.GetKeyDown(KeyCode.T))
         {
             DestroyAll();
@@ -176,7 +176,9 @@ public class PlayerManager : MonoBehaviour
     public GameObject scoreText;
     public GameObject gameOverPanel;
     public Text endScoreText;
+    public Text endHighscoreText;
     public GameObject endScoreTextOBJ;
+    public GameObject endHighscoreTextOBJ;
 
     public GameObject playerObject;
 
@@ -215,8 +217,21 @@ public class PlayerManager : MonoBehaviour
         endScoreTextOBJ.SetActive(true);
         endScoreText.text = "Score: " + Shoot.score;
 
+        HighscoreCheck();
+        endHighscoreTextOBJ.SetActive(true);
+
         gameOverPanel.SetActive(true);
 
+    }
+
+    float highscore;
+    void HighscoreCheck()
+    {
+        if(Shoot.score >= highscore)
+        {
+            highscore = Shoot.score;
+        }
+        endHighscoreText.text = "Highscore: " + highscore;
     }
 
     // SHOOTING
