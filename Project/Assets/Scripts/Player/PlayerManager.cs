@@ -177,6 +177,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject gameOverPanel;
     public Text endScoreText;
     public Text endHighscoreText;
+    public Text highscoreMenu;
     public GameObject endScoreTextOBJ;
     public GameObject endHighscoreTextOBJ;
 
@@ -232,7 +233,9 @@ public class PlayerManager : MonoBehaviour
             highscore = Shoot.score;
         }
         endHighscoreText.text = "Highscore: " + highscore;
+        highscoreMenu.text = "Highscore: " + highscore;
     }
+
 
     // SHOOTING
     void Fire()
