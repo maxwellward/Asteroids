@@ -36,6 +36,7 @@ public class PlayerManager : MonoBehaviour
         player.GetComponent<Renderer>().enabled = true;
         scorePanel.SetActive(true);
         startPanel.SetActive(false);
+        fireSprite.GetComponent<Renderer>().enabled = false;
     }
 
     public void RestartGame()
@@ -152,6 +153,11 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             player.AddForce(transform.up * thrust);
+            fireSprite.GetComponent<Renderer>().enabled = true;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            fireSprite.GetComponent<Renderer>().enabled = false;
         }
 
         if (player.velocity.magnitude > topSpeed)
@@ -182,6 +188,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject endHighscoreTextOBJ;
 
     public GameObject playerObject;
+    public GameObject fireSprite;
 
     GameObject asteroidHit;
 
