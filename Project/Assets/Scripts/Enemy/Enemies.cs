@@ -107,6 +107,11 @@ public class Enemies : MonoBehaviour
     public GameObject particleObject;
     public ParticleSystem explosionParticles;
 
+    public void StopParticles()
+    {
+        explosionParticles.Clear();
+    }
+
     public void DisplayParticles()
     {
         particleObject.transform.position = Shoot.asteroidPosition;

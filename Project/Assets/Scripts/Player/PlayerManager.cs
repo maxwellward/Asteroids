@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject startPanel;
     public GameObject scorePanel;
+
+    private Enemies enemyScript;
+
     // Start is run on game start.
     private void Start()
     {
@@ -23,6 +26,8 @@ public class PlayerManager : MonoBehaviour
         startPanel.SetActive(true);
         // Sets the score to give to 100, which can then be modified by missing or hitting shots.
         Shoot.scoreToGive = 100f;
+
+        
     }
 
     public void StartGame()
@@ -46,12 +51,31 @@ public class PlayerManager : MonoBehaviour
 
         player.velocity = Vector3.zero;
         player.angularVelocity = 0;
+
+        enemyScript = FindObjectOfType<Enemies>();
+        enemyScript.StopParticles();
+
+        gameOver = false;
+        scoreText.SetActive(true);
+        Shoot.scoreToGive = 100f;
         
+        loops = 0;
+
         DestroyAll();
     }
 
     void DestroyAll()
     {
+        GameObject [] foundBullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+	    if(foundBullets.Length != 0)
+	    {
+		    foreach( GameObject bulletToDestroy in foundBullets)
+		    {
+		    	Destroy(bulletToDestroy);
+		    }
+	    }
+        
         GameObject [] foundEnemies = GameObject.FindGameObjectsWithTag("Asteroid");
 
 	    if(foundEnemies.Length != 0)
@@ -160,7 +184,7 @@ public class PlayerManager : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-
+        Debug.Log("Run");
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
             Time.timeScale = 0;
