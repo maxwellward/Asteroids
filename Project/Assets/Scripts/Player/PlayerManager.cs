@@ -194,11 +194,11 @@ public class PlayerManager : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("Run");
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
             Time.timeScale = 0;
             gameOver = true;
+            fireSprite.GetComponent<Renderer>().enabled = false;
             StartCoroutine("BlinkPlayer");
         }
     }
