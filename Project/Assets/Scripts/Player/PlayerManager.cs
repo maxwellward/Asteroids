@@ -57,6 +57,8 @@ public class PlayerManager : MonoBehaviour
 
     public void RestartGame()
     {
+        lives = 3;
+
         FindObjectOfType<AudioManager>().Play("Coin");
 
         isBlinking = false;
@@ -413,10 +415,9 @@ public class PlayerManager : MonoBehaviour
                 }
                 if(inGameOverMenu == true)
                 {
-                    Debug.Log("Input recieved");
                     gameOverPanel.SetActive(false);
                     RestartGame();
-                    Debug.Log("Everything run");
+                    inGameOverMenu = false;
                 }
             }
         

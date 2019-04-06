@@ -132,7 +132,11 @@ public class Shoot : MonoBehaviour
     {
         enemyScript.DisplayParticles();
         score = Mathf.RoundToInt(score + scoreToGive * 1.0f);
-        scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
+        if (scoreToGive < 300.0f)
+        {
+            scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
+        }
+        
     }
 
     void OnHitSmall()
@@ -151,6 +155,9 @@ public class Shoot : MonoBehaviour
 
     void OnMiss()
     {
-        scoreToGive = Mathf.RoundToInt(scoreToGive / 1.2f);
+        if (scoreToGive > 10)
+        {
+            scoreToGive = Mathf.RoundToInt(scoreToGive / 1.2f);
+        }
     }
 }
