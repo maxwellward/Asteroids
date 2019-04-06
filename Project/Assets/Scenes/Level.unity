@@ -1157,6 +1157,18 @@ MonoBehaviour:
     pitch: 1.275
     loop: 1
     source: {fileID: 0}
+  - name: Coin
+    clip: {fileID: 8300000, guid: ae71c5ab5328d1e4997bf0afe7338dc2, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Soundtrack
+    clip: {fileID: 8300000, guid: 792a04cd76e252240ad3428df556319d, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
 --- !u!4 &803063376
 Transform:
   m_ObjectHideFlags: 0

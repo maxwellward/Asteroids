@@ -20,6 +20,8 @@ public class PlayerManager : MonoBehaviour
     // Start is run on game start.
     private void Start()
     {
+        StartCoroutine("WaitToPlaySoundtrack");
+        inMainMenu = true;
         Time.timeScale = 0;
         player.GetComponent<Renderer>().enabled = false;
         scorePanel.SetActive(false);
@@ -30,8 +32,21 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    IEnumerator WaitToPlaySoundtrack()
+    {
+            Debug.Log("Started");
+            yield return new WaitForSecondsRealtime(5f);
+            FindObjectOfType<AudioManager>().Play("Soundtrack");
+            Debug.Log("Played");
+    }
+
     public void StartGame()
     {
+        FindObjectOfType<AudioManager>().Play("Coin");
+
+        inGame = true;
+        inMainMenu = false;
+
         Time.timeScale = 1;
         player.GetComponent<Renderer>().enabled = true;
         scorePanel.SetActive(true);
@@ -41,6 +56,9 @@ public class PlayerManager : MonoBehaviour
 
     public void RestartGame()
     {
+        inGame = true;
+        inMainMenu = false;
+
         Shoot.score = 0;
         Time.timeScale = 1;
         player.GetComponent<Renderer>().enabled = true;
@@ -210,6 +228,7 @@ public class PlayerManager : MonoBehaviour
         {
             Time.timeScale = 0;
             gameOver = true;
+            inGame = false;
             fireSprite.GetComponent<Renderer>().enabled = false;
             FindObjectOfType<AudioManager>().StopPlaying("Thrust");
             StartCoroutine("BlinkPlayer");
@@ -258,14 +277,32 @@ public class PlayerManager : MonoBehaviour
 
 
     // SHOOTING
+    bool inMainMenu = true;
+    bool inGame = false;
     void Fire()
     {
+        
+        
+        
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (inGame == true)
+                {
+                    FindObjectOfType<AudioManager>().Play("Shoot");
+                    Instantiate(bulletPrefab, shootLoc.position, shootLoc.rotation);
+                }
+                else if (inMainMenu == true)
+                {
+                    
+                    StartGame();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            FindObjectOfType<AudioManager>().Play("Shoot");
-            Instantiate(bulletPrefab, shootLoc.position, shootLoc.rotation);
-        }
+                } else
+                {
+                    return;
+                }
+            }
+        
+        
 
     }
 
@@ -274,6 +311,8 @@ public class PlayerManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        inMainMenu = true;
+
         gameOverPanel.SetActive(false);
         startPanel.SetActive(true);
 

@@ -134,11 +134,11 @@ public class Shoot : MonoBehaviour
     {
         enemyScript.DisplayParticles();
         score = (score + scoreToGive);
-        scoreToGive = Mathf.RoundToInt(scoreToGive * 1.2f);
+        scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
     }
 
     void OnMiss()
     {
-        scoreToGive = Mathf.RoundToInt(scoreToGive / 1.5f);
+        scoreToGive = Mathf.RoundToInt(scoreToGive / 1.2f);
     }
 }
