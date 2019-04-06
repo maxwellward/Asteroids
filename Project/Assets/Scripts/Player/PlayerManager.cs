@@ -130,6 +130,18 @@ public class PlayerManager : MonoBehaviour
             Movement(); // Run the movement checks
         }
         
+        
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+
+            FindObjectOfType<AudioManager>().Play("Thrust");
+        }
+        else if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            FindObjectOfType<AudioManager>().StopPlaying("Thrust");
+        }
+
+
     }
 
     // Player movement
@@ -199,6 +211,7 @@ public class PlayerManager : MonoBehaviour
             Time.timeScale = 0;
             gameOver = true;
             fireSprite.GetComponent<Renderer>().enabled = false;
+            FindObjectOfType<AudioManager>().StopPlaying("Thrust");
             StartCoroutine("BlinkPlayer");
         }
     }
@@ -250,6 +263,7 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            FindObjectOfType<AudioManager>().Play("Shoot");
             Instantiate(bulletPrefab, shootLoc.position, shootLoc.rotation);
         }
 

@@ -22,17 +22,6 @@ public class Shoot : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //Enemies.kills = Enemies.kills + 9;
-            //Debug.Log("Kills " + Enemies.kills);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            //Enemies.kills = Enemies.kills + 14;
-            //Debug.Log("Kills " + kills);
-        }
     }
 
     void OnTriggerExit2D(Collider2D col)
@@ -77,6 +66,7 @@ public class Shoot : MonoBehaviour
         }
         else if (col.gameObject.tag == "AsteroidTiny")
         {
+            FindObjectOfType<AudioManager>().Play("Small");
             asteroid = col.gameObject;
             asteroidPosition = asteroid.transform.position;
             Destroy(this.gameObject);
@@ -118,7 +108,7 @@ public class Shoot : MonoBehaviour
     {
         asteroidPosition = asteroid.transform.position;
 
-
+        FindObjectOfType<AudioManager>().Play("Small");
 
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
@@ -128,6 +118,8 @@ public class Shoot : MonoBehaviour
     void BreakAsteroidSmall()
     {
         asteroidPosition = asteroid.transform.position;
+
+        FindObjectOfType<AudioManager>().Play("Medium");
 
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
