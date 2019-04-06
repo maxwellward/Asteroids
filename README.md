@@ -1,4 +1,6 @@
-# Astroids
-A repository for my Astroids clone
+# Asteroids
 
-Such an oof
+This is the public repository for my Asteroids clone, feel free to check out the releases
+and give feedback!
+
+Discord: https://discord.gg/ARFuFby
