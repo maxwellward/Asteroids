@@ -1050,8 +1050,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 703.3, y: 416.4}
-  m_SizeDelta: {x: 193.4, y: 67.1}
+  m_AnchoredPosition: {x: 696.73, y: 416.35}
+  m_SizeDelta: {x: 206.54, y: 67.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &553948028
 MonoBehaviour:
@@ -1086,7 +1086,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Developer Release
+  m_Text: 'Playtester Release
 
     Do Not Distribute'
 --- !u!222 &553948029
