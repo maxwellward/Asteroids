@@ -47,10 +47,8 @@ public class Shoot : MonoBehaviour
             asteroid = col.gameObject;
 
             BreakAsteroid();
-            OnHit();
+            OnHitBig();
 
-   //         Enemies.kills++;
-//            Enemies.CheckLevel();
         }
         else if (col.gameObject.tag == "AsteroidSmall")
         {
@@ -62,7 +60,7 @@ public class Shoot : MonoBehaviour
             asteroid = col.gameObject;
 
             BreakAsteroidSmall();
-            OnHit();
+            OnHitSmall();
         }
         else if (col.gameObject.tag == "AsteroidTiny")
         {
@@ -71,7 +69,7 @@ public class Shoot : MonoBehaviour
             asteroidPosition = asteroid.transform.position;
             Destroy(this.gameObject);
             Destroy(col.gameObject);
-            OnHit();
+            OnHitTiny();
         }
     }
 
@@ -130,10 +128,24 @@ public class Shoot : MonoBehaviour
     public static float scoreToGive;
 
 
-    void OnHit()
+    void OnHitBig()
     {
         enemyScript.DisplayParticles();
-        score = (score + scoreToGive);
+        score = Mathf.RoundToInt(score + scoreToGive * 1.0f);
+        scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
+    }
+
+    void OnHitSmall()
+    {
+        enemyScript.DisplayParticles();
+        score = Mathf.RoundToInt(score + scoreToGive * 1.15f);
+        scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
+    }
+
+    void OnHitTiny()
+    {
+        enemyScript.DisplayParticles();
+        score = Mathf.RoundToInt(score + scoreToGive * 1.3f);
         scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
     }
 

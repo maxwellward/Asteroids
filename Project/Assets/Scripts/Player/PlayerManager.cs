@@ -221,33 +221,39 @@ public class PlayerManager : MonoBehaviour
     public GameObject fireSprite;
 
     GameObject asteroidHit;
+    GameObject killerAsteroid;
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
+            killerAsteroid = col.gameObject;
             Time.timeScale = 0;
             gameOver = true;
             inGame = false;
             fireSprite.GetComponent<Renderer>().enabled = false;
             FindObjectOfType<AudioManager>().StopPlaying("Thrust");
-            StartCoroutine("BlinkPlayer");
+            StartCoroutine("BlinkObj");
         }
-    }
 
+        
+    }
 
     int loops;
 
-    IEnumerator BlinkPlayer()
+    IEnumerator BlinkObj()
     {
         player.GetComponent<Renderer>().enabled = false;
+        killerAsteroid.GetComponent<Renderer>().enabled = false;
 
         while (loops < 5)
         {
             yield return new WaitForSecondsRealtime(0.5f);
             player.GetComponent<Renderer>().enabled = true;
+            killerAsteroid.GetComponent<Renderer>().enabled = true;
             yield return new WaitForSecondsRealtime(0.5f);
             player.GetComponent<Renderer>().enabled = false;
+            killerAsteroid.GetComponent<Renderer>().enabled = false;
 
             loops++;
         }
