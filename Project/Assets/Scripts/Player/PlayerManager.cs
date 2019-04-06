@@ -34,14 +34,15 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator WaitToPlaySoundtrack()
     {
-            Debug.Log("Started");
             yield return new WaitForSecondsRealtime(5f);
             FindObjectOfType<AudioManager>().Play("Soundtrack");
-            Debug.Log("Played");
     }
 
     public void StartGame()
     {
+        isBlinking = false;
+        lives = 3;
+
         FindObjectOfType<AudioManager>().Play("Coin");
 
         inGame = true;
@@ -56,6 +57,14 @@ public class PlayerManager : MonoBehaviour
 
     public void RestartGame()
     {
+        FindObjectOfType<AudioManager>().Play("Coin");
+
+        isBlinking = false;
+
+        life1.enabled = true;
+        life2.enabled = true;
+        life3.enabled = true;
+
         inGame = true;
         inMainMenu = false;
 
@@ -151,8 +160,10 @@ public class PlayerManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-
-            FindObjectOfType<AudioManager>().Play("Thrust");
+            if(isBlinking == false)
+            {
+                FindObjectOfType<AudioManager>().Play("Thrust");
+            }
         }
         else if (Input.GetKeyUp(KeyCode.UpArrow))
         {
@@ -169,22 +180,32 @@ public class PlayerManager : MonoBehaviour
 
     void Movement()
     {
-        // Right turn
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (isBlinking == false && inMainMenu == false && gameOver == false)
         {
-            transform.Rotate(0, 0, -3, Space.World);
+            // Right turn
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.Rotate(0, 0, -3, Space.World);
+            }
+            // Left turn
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.Rotate(0, 0, 3, Space.World);
+            }
+            // Forward Thrust
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                if (isBlinking == false)
+                {
+                    player.AddForce(transform.up * thrust);
+                    fireSprite.GetComponent<Renderer>().enabled = true;
+                }
+                else
+                {
+                    return;
+                }
         }
-        // Left turn
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Rotate(0, 0, 3, Space.World);
-        }
-        // Forward Thrust
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            player.AddForce(transform.up * thrust);
-            fireSprite.GetComponent<Renderer>().enabled = true;
-        }
+
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             fireSprite.GetComponent<Renderer>().enabled = false;
@@ -192,6 +213,9 @@ public class PlayerManager : MonoBehaviour
 
         if (player.velocity.magnitude > topSpeed)
             player.velocity = player.velocity.normalized * topSpeed;
+        }
+
+        
     }
 
 // Teleport player when they leave the arena
@@ -209,6 +233,12 @@ public class PlayerManager : MonoBehaviour
 
     // PLAYER DEATH
 
+    public int lives;
+
+    public Image life1;
+    public Image life2;
+    public Image life3;
+
     public GameObject scoreText;
     public GameObject gameOverPanel;
     public Text endScoreText;
@@ -223,15 +253,44 @@ public class PlayerManager : MonoBehaviour
     GameObject asteroidHit;
     GameObject killerAsteroid;
 
+    void LoseLife()
+    {
+        isBlinking = false;
+        lives = (lives - 1);
+        DestroyAll();
+        Time.timeScale = 1;
+        loops = 0;
+
+        if (lives == 2)
+        {
+           life1.enabled = false;
+        } 
+        else if (lives == 1)
+        {
+            life2.enabled = false;
+        }
+        else if (lives == 0)
+        {
+            life3.enabled = false;
+        }
+
+    }
+
+    void EndGame()
+    {
+        gameOver = true;
+        inGame = false;
+        
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
+
         if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
         {
+            player.velocity = Vector2.zero;
             killerAsteroid = col.gameObject;
             Time.timeScale = 0;
-            gameOver = true;
-            inGame = false;
-            fireSprite.GetComponent<Renderer>().enabled = false;
             FindObjectOfType<AudioManager>().StopPlaying("Thrust");
             StartCoroutine("BlinkObj");
         }
@@ -240,33 +299,75 @@ public class PlayerManager : MonoBehaviour
     }
 
     int loops;
+    bool isBlinking = false;
 
     IEnumerator BlinkObj()
     {
-        player.GetComponent<Renderer>().enabled = false;
-        killerAsteroid.GetComponent<Renderer>().enabled = false;
+        isBlinking = true;
 
-        while (loops < 5)
+        if(lives > 0)
         {
-            yield return new WaitForSecondsRealtime(0.5f);
-            player.GetComponent<Renderer>().enabled = true;
-            killerAsteroid.GetComponent<Renderer>().enabled = true;
-            yield return new WaitForSecondsRealtime(0.5f);
+
+            fireSprite.GetComponent<Renderer>().enabled = false;
             player.GetComponent<Renderer>().enabled = false;
             killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-            loops++;
+            while (loops < 3)
+            {
+                yield return new WaitForSecondsRealtime(0.5f);
+                player.GetComponent<Renderer>().enabled = true;
+                killerAsteroid.GetComponent<Renderer>().enabled = true;
+                yield return new WaitForSecondsRealtime(0.5f);
+                player.GetComponent<Renderer>().enabled = false;
+                killerAsteroid.GetComponent<Renderer>().enabled = false;
+
+                loops++;
+            }
+
+            Vector3 restartPosition = new Vector3(0, 0, 0);
+            player.transform.position = (restartPosition);
+            player.transform.rotation = Quaternion.Euler(restartPosition.x, restartPosition.y, restartPosition.z);
+
+            player.GetComponent<Renderer>().enabled = true;
+
+            LoseLife();
+            Debug.Log("Lives" + lives);
         }
+        else
+        {
+            fireSprite.GetComponent<Renderer>().enabled = false;
+            player.GetComponent<Renderer>().enabled = false;
+            killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-        scoreText.SetActive(false);
+            while (loops < 5)
+            {
+                yield return new WaitForSecondsRealtime(0.5f);
+                player.GetComponent<Renderer>().enabled = true;
+                killerAsteroid.GetComponent<Renderer>().enabled = true;
+                yield return new WaitForSecondsRealtime(0.5f);
+                player.GetComponent<Renderer>().enabled = false;
+                killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-        endScoreTextOBJ.SetActive(true);
-        endScoreText.text = "Score: " + Shoot.score;
+                loops++;
+            }
 
-        HighscoreCheck();
-        endHighscoreTextOBJ.SetActive(true);
+            scoreText.SetActive(false);
 
-        gameOverPanel.SetActive(true);
+            endScoreTextOBJ.SetActive(true);
+            endScoreText.text = "Score: " + Shoot.score;
+
+            HighscoreCheck();
+            endHighscoreTextOBJ.SetActive(true);
+
+            gameOverPanel.SetActive(true);
+
+            isBlinking = false;
+
+            gameOver = true;
+
+            inGameOverMenu = true;
+
+        }
 
     }
 
@@ -283,12 +384,14 @@ public class PlayerManager : MonoBehaviour
 
 
     // SHOOTING
+    bool inGameOverMenu = false;
     bool inMainMenu = true;
     bool inGame = false;
     void Fire()
     {
         
-        
+        if (isBlinking == false && inMainMenu == false && gameOver == false)
+        {
         
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -297,19 +400,26 @@ public class PlayerManager : MonoBehaviour
                     FindObjectOfType<AudioManager>().Play("Shoot");
                     Instantiate(bulletPrefab, shootLoc.position, shootLoc.rotation);
                 }
-                else if (inMainMenu == true)
+            }
+        
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (inMainMenu == true)
                 {
                     
                     StartGame();
 
-                } else
+                }
+                if(inGameOverMenu == true)
                 {
-                    return;
+                    Debug.Log("Input recieved");
+                    gameOverPanel.SetActive(false);
+                    RestartGame();
+                    Debug.Log("Everything run");
                 }
             }
         
-        
-
     }
 
 
@@ -317,6 +427,12 @@ public class PlayerManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+
+        life1.enabled = true;
+        life2.enabled = true;
+        life3.enabled = true;
+
+        inGameOverMenu = false;
         inMainMenu = true;
 
         gameOverPanel.SetActive(false);
