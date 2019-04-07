@@ -13,5 +13,10 @@ public class UI : MonoBehaviour
         scoreText.text = "Score: " + Shoot.score;
     }
 
-   
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quit Game");
+    }
+
 }

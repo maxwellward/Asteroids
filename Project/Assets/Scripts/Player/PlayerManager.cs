@@ -20,6 +20,8 @@ public class PlayerManager : MonoBehaviour
     // Start is run on game start.
     private void Start()
     {
+        highscore = PlayerPrefs.GetFloat("Highscore", 0);
+
         StartCoroutine("WaitToPlaySoundtrack");
         inMainMenu = true;
         Time.timeScale = 0;
@@ -140,21 +142,33 @@ public class PlayerManager : MonoBehaviour
     // Update is called every frame, so these functions are run and checked every frame (60 times a second usually).
     // Checks if the player is firing, and if they're allowed to move at the end of the game.
 
+    bool paused = false;
+
     bool gameOver; // True or false, is the game over? aka. has the player died?
     void Update()
     {
 
-        if(Input.GetKeyDown(KeyCode.T))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            DestroyAll();
+            if (paused == false){
+                PauseGame();
+            }
+            else if (paused == true)
+            {
+                UnpauseGame();
+            }
         }
 
-        Fire();
+        if (paused == false)
+        {
+            Fire();
+        }
+
         if (gameOver == true) // Check if the game is over
         {
             return; // Do nothing
         }
-        else
+        else if (paused == false)
         {
             Movement(); // Run the movement checks
         }
@@ -162,7 +176,7 @@ public class PlayerManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if(isBlinking == false)
+            if(isBlinking == false && paused == false)
             {
                 FindObjectOfType<AudioManager>().Play("Thrust");
             }
@@ -182,7 +196,7 @@ public class PlayerManager : MonoBehaviour
 
     void Movement()
     {
-        if (isBlinking == false && inMainMenu == false && gameOver == false)
+        if (isBlinking == false && inMainMenu == false && gameOver == false && paused == false)
         {
             // Right turn
             if (Input.GetKey(KeyCode.RightArrow))
@@ -379,6 +393,7 @@ public class PlayerManager : MonoBehaviour
         if(Shoot.score >= highscore)
         {
             highscore = Shoot.score;
+            PlayerPrefs.SetFloat("Highscore", highscore);
         }
         endHighscoreText.text = "Highscore: " + highscore;
         highscoreMenu.text = "Highscore: " + highscore;
@@ -428,6 +443,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        UnpauseGame();
 
         life1.enabled = true;
         life2.enabled = true;
@@ -460,5 +476,45 @@ public class PlayerManager : MonoBehaviour
 
         DestroyAll();
     }
+
+
+
+// PAUSE
+
+    public GameObject pausedPanel;
+
+    public GameObject three;
+    public GameObject two;
+    public GameObject one;
+
+    void PauseGame(){
+        pausedPanel.SetActive(true);
+        Time.timeScale = 0;
+        paused = true;
+        fireSprite.GetComponent<Renderer>().enabled = false;
+        FindObjectOfType<AudioManager>().StopPlaying("Thrust");
+    }
+
+    void UnpauseGame(){
+        pausedPanel.SetActive(false);
+        StartCoroutine("ResumeGame");
+        
+    }
+
+    IEnumerator ResumeGame()
+        {
+                three.SetActive(true);
+                yield return new WaitForSecondsRealtime(1f);
+                three.SetActive(false);
+                two.SetActive(true);
+                yield return new WaitForSecondsRealtime(1f);
+                two.SetActive(false);
+                one.SetActive(true);
+                yield return new WaitForSecondsRealtime(1f);
+                one.SetActive(false);
+
+                Time.timeScale = 1;
+                paused = false;
+        }
 
 }

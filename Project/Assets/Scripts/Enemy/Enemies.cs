@@ -51,16 +51,10 @@ public class Enemies : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            side = Random.Range(1, 5);
-            SpawnEnemy();
-        }
-
-        //if (Input.GetKeyDown(KeyCode.R))
+        //if (Input.GetKeyDown(KeyCode.W))
         //{
-        //    kills = kills + 10;
-        //    Debug.Log(kills);
+        //    side = Random.Range(1, 5);
+        //    SpawnEnemy();
         //}
     }
 
