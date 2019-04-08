@@ -56,7 +56,7 @@ public class PlayerManager : MonoBehaviour
 	public void StartGame()
 	{
 		isBlinking = false;
-		lives = 0; // CHANGE THIS TO 3
+		lives = 3; // CHANGE THIS TO 3
 
 		FindObjectOfType<AudioManager>().Play("Coin");
 
