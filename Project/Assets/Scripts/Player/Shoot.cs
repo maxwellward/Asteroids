@@ -5,11 +5,15 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
 
+    
     private Enemies enemyScript;
+    private PlayerManager playerScript;
 
     void Start()
     {
         enemyScript = FindObjectOfType<Enemies>();
+        playerScript = FindObjectOfType<PlayerManager>();
+        
     }
 
     public float speed;
@@ -126,10 +130,12 @@ public class Shoot : MonoBehaviour
 
 
     public static float scoreToGive;
-
+    int local_asteroidsHit;
+    int local_asteroidsMissed;
 
     void OnHitBig()
     {
+
         enemyScript.DisplayParticles();
         score = Mathf.RoundToInt(score + scoreToGive * 1.0f);
         if (scoreToGive < 300.0f)
@@ -141,6 +147,7 @@ public class Shoot : MonoBehaviour
 
     void OnHitSmall()
     {
+
         enemyScript.DisplayParticles();
         score = Mathf.RoundToInt(score + scoreToGive * 1.15f);
         scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
@@ -148,6 +155,7 @@ public class Shoot : MonoBehaviour
 
     void OnHitTiny()
     {
+
         enemyScript.DisplayParticles();
         score = Mathf.RoundToInt(score + scoreToGive * 1.3f);
         scoreToGive = Mathf.RoundToInt(scoreToGive * 1.07f);
@@ -155,6 +163,7 @@ public class Shoot : MonoBehaviour
 
     void OnMiss()
     {
+
         if (scoreToGive > 10)
         {
             scoreToGive = Mathf.RoundToInt(scoreToGive / 1.2f);

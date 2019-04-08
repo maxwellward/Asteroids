@@ -7,16 +7,182 @@ public class UI : MonoBehaviour
 {
     public Text scoreText;
 
+    // Stats
+    public Text text_highscore;
+    public Text text_shotsFired;
+    public Text text_asteroidsHit;
+    public Text text_asteroidsMissed;
+    public Text text_gamesPlayed;
+
+    void Start()
+    {
+        // Stats
+        playerScript = FindObjectOfType<PlayerManager>();
+
+        // Easter egg
+        egg_buttonToCatch.gameObject.SetActive(false);
+        egg_linkText.SetActive(false);
+
+        // Console
+        DeveloperConsole.SetActive(false);
+        consoleActive = false;
+    }
+
+    bool consoleActive = false;
+    public string output;
+    public InputField ConsoleInput;
+    public GameObject DeveloperConsole;
+
 
     void Update()
     {
+        
+        // Developer Console
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+
+            if (consoleActive == false)
+            {
+                DeveloperConsole.SetActive(true);
+                consoleActive = true;
+            }
+            else
+            {
+                DeveloperConsole.SetActive(false);
+                consoleActive = false;
+            }
+
+        }
+        if (consoleActive == true)
+        {
+            
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                output = ConsoleInput.text; 
+                ConsoleInput.text = "";
+                InputCheck();
+            }
+        }
+
+        // Score
         scoreText.text = "Score: " + Shoot.score;
     }
 
     public void QuitGame()
     {
-        Application.Quit();
         Debug.Log("Quit Game");
+        PlayerPrefs.SetFloat("GamesPlayed", playerScript.stats_gamesPlayed);
+        PlayerPrefs.SetFloat("ShotsFired", playerScript.stats_shotsFired);
+        Debug.Log("Set values");
+        Application.Quit();
+    }
+
+// STATS PAGE
+
+    private PlayerManager playerScript;
+
+    public GameObject statsCanvas;
+
+    public void LoadStatsPage()
+    {
+        playerScript.startPanel.SetActive(false);
+        statsCanvas.SetActive(true);
+    }
+
+    public void stats_ReturnToMenu()
+    {
+        playerScript.startPanel.SetActive(true);
+        statsCanvas.SetActive(false);
+    }
+
+    public GameObject resetButton;
+    public GameObject confirmButton;
+    bool stats_confirmStage = false;
+    public void stats_resetStats()
+    {
+        if (stats_confirmStage == false)
+        {
+            resetButton.SetActive(false);
+            confirmButton.SetActive(true);
+            stats_confirmStage = true;
+        }
+        else
+        {
+            playerScript.stats_gamesPlayed = 0;
+			playerScript.stats_shotsFired = 0;
+			playerScript.highscore = 0;
+            
+			Debug.Log("stats cleared = " + playerScript.stats_gamesPlayed + "& shots" + playerScript.stats_shotsFired + "highscore+" + playerScript.highscore);
+			playerScript.UpdateStats();
+
+            stats_confirmStage = false;
+            resetButton.SetActive(true);
+            confirmButton.SetActive(false);
+
+            PlayerPrefs.SetFloat("Highscore", playerScript.highscore);
+		    PlayerPrefs.SetInt("stats_shotsFired", playerScript.stats_shotsFired);
+		    PlayerPrefs.SetInt("stats_gamesPlayed", playerScript.stats_gamesPlayed);
+        }
+    }
+
+
+// EASTER EGG #1
+
+    public GameObject egg_linkText;
+
+    public Transform egg_asteroidToExpand;
+    int egg_timesPressed;
+    public void EasterEgg()
+    {
+        egg_timesPressed++;
+        if (egg_timesPressed == 120) // CHANGE THIS TO 120
+        {
+            StartCoroutine("egg_TeleportBall");
+            egg_buttonToCatch.gameObject.SetActive(true);
+            Destroy(egg_asteroidToExpand.gameObject);
+        }
+
+        egg_asteroidToExpand.localScale += new Vector3(1, 1, 1);
+    }
+
+// Catch me ball
+    bool ballCaught = false;
+    public Transform egg_buttonToCatch;
+
+    public void egg_BallCaught()
+    {
+        ballCaught = true;
+        Debug.Log("nice");
+        Destroy(egg_buttonToCatch.gameObject);
+        egg_linkText.SetActive(true);
+    }
+
+    IEnumerator egg_TeleportBall()
+    {
+        while(ballCaught == false){
+            if (ballCaught == false)
+            {
+                yield return new WaitForSecondsRealtime(1f);
+                egg_buttonToCatch.transform.position = new Vector3(Random.Range(-684, 857), Random.Range(415, -415), 0);
+            }
+        }
+    }
+    
+// ----
+
+
+
+
+// DEV CONSOLE COMMANDS
+// DEV CONSOLE COMMANDS
+// DEV CONSOLE COMMANDS
+
+    void InputCheck()
+    {
+        if (output == "hello")
+        {
+            Debug.Log("yeet");
+        }    
     }
 
 }
