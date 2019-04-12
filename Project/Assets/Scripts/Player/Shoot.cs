@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
+    // Variables
+    public float speed;
+    public static float score;
+    public static float scoreToGive;
+    float xLoc;
+    float yLoc;
+    string objectName;
+    GameObject asteroid;
+    public GameObject asteroidTwo;
+    public GameObject asteroidThree;
+    public static Vector3 asteroidPosition;
 
-    
+    // External script refrences
     private Enemies enemyScript;
     private PlayerManager playerScript;
 
+    // Start is run when the game starts
     void Start()
     {
-        enemyScript = FindObjectOfType<Enemies>();
-        playerScript = FindObjectOfType<PlayerManager>();
+        enemyScript = FindObjectOfType<Enemies>(); // Initalize the Enemies script reference.
+        playerScript = FindObjectOfType<PlayerManager>(); // Initalize the PlayerManager script reference.
         
     }
 
-    public float speed;
-
-    float xLoc;
-    float yLoc;
-
-
-
+    // Update is run every frame
     void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
@@ -94,15 +100,7 @@ public class Shoot : MonoBehaviour
 
     // ENEMY DESTROY MANAGEMENT
 
-    string objectName;
-    GameObject asteroid;
 
-    public GameObject asteroidTwo;
-    public GameObject asteroidThree;
-
-    public static Vector3 asteroidPosition;
-    
-    public static float score;
 
 
 
@@ -129,9 +127,7 @@ public class Shoot : MonoBehaviour
     }
 
 
-    public static float scoreToGive;
-    int local_asteroidsHit;
-    int local_asteroidsMissed;
+    
 
     void OnHitBig()
     {
