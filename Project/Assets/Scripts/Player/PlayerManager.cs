@@ -458,7 +458,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
 
-	// BACK TO MENU BUTTON
+	// BACK TO MENU BUTTON.
 
 	public void ReturnToMenu()
 	{
