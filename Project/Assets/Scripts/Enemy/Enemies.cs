@@ -91,13 +91,14 @@ public class Enemies : MonoBehaviour
     // It is run from the Shoot script in the "OnHit" functions.
     public void DisplayParticles()
     {
-        particleObject.transform.position = Shoot.asteroidPosition; // Set the location of the particles to the asteroid that was destroyed
-        explosionParticles.Play(); // Display the particle
+        Instantiate(particleObject, Shoot.asteroidPosition, Quaternion.Euler(-90, 0, 0));
+        //particleObject.transform.position = Shoot.asteroidPosition; // Set the location of the particles to the asteroid that was destroyed
+        //explosionParticles.Play(); // Display the particle
     }
     
     // Stop the particles
     public void StopParticles()
     {
-        explosionParticles.Clear(); // Clear the particles from the screen
+        //explosionParticles.Clear(); // Clear the particles from the screen
     }
 }
