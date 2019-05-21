@@ -99,7 +99,7 @@ public class UI : MonoBehaviour
 
     public void stats_ReturnToMenu()
     {
-        playerScript.startPanel.SetActive(true);
+        startPanel.SetActive(true);
         statsCanvas.SetActive(false);
     }
 

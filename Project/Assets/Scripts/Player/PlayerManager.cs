@@ -99,7 +99,7 @@ public class PlayerManager : MonoBehaviour
 	// Update is called every frame, so these functions are run and checked every frame (60 times a second usually).
 	// Checks if the player is firing, and if they're allowed to move at the end of the game.
 
-	public bool paused = false;
+	
 
 	
 	void Update()
@@ -109,16 +109,16 @@ public class PlayerManager : MonoBehaviour
 
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			if (paused == false && resumingGame == false){
+			if (gameManagerScript.paused == false && resumingGame == false){
 				PauseGame();
 			}
-			else if (paused == true && resumingGame == false)
+			else if (gameManagerScript.paused == true && resumingGame == false)
 			{
 				UnpauseGame();
 			}
 		}
 
-		if (paused == false)
+		if (gameManagerScript.paused == false)
 		{
 			Fire();
 		}
@@ -127,7 +127,7 @@ public class PlayerManager : MonoBehaviour
 		{
 			return; // Do nothing
 		}
-		else if (paused == false)
+		else if (gameManagerScript.paused == false)
 		{
 			Movement(); // Run the movement checks
 		}
@@ -135,7 +135,7 @@ public class PlayerManager : MonoBehaviour
 		
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			if(gameManagerScript.isBlinking == false && paused == false)
+			if(gameManagerScript.isBlinking == false && gameManagerScript.paused == false)
 			{
 				FindObjectOfType<AudioManager>().Play("Thrust");
 			}
@@ -155,7 +155,7 @@ public class PlayerManager : MonoBehaviour
 
 	void Movement()
 	{
-		if (gameManagerScript.isBlinking == false && gameManagerScript.inMainMenu == false && gameManagerScript.gameOver == false && gameManagerScript.paused == false)
+		if (gameManagerScript.isBlinking == false && gameManagerScript.inMainMenu == false && gameManagerScript.gameOver == false && gameManagerScript.gameManagerScript.paused == false)
 		{
 			// Right turn
 			if (Input.GetKey(KeyCode.RightArrow))
@@ -411,16 +411,16 @@ public class PlayerManager : MonoBehaviour
 	void PauseGame(){
 		if (resumingGame == false)
 		{
-			pausedPanel.SetActive(true);
+			gameManagerScript.pausedPanel.SetActive(true);
 			Time.timeScale = 0;
-			paused = true;
+			gameManagerScript.paused = true;
 			fireSprite.GetComponent<Renderer>().enabled = false;
 			FindObjectOfType<AudioManager>().StopPlaying("Thrust");
 		}	
 	}
 
 	void UnpauseGame(){
-		pausedPanel.SetActive(false);
+		gameManagerScript.pausedPanel.SetActive(false);
 		StartCoroutine("ResumeGame");
 		
 	}
@@ -441,7 +441,7 @@ public class PlayerManager : MonoBehaviour
 				one.SetActive(false);
 
 				Time.timeScale = 1;
-				paused = false;
+				gameManagerScript.paused = false;
 				resumingGame = false;
 		}
 }

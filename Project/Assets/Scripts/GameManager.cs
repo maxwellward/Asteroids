@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool inGame = false;
     public bool inMainMenu = true;
     public bool gameOver;
+	public bool paused = false;
 
     public int loops;
 
@@ -115,6 +116,6 @@ public class GameManager : MonoBehaviour
 		
 		loops = 0;
 
-		DestroyAll();
+		playerScript.DestroyAll();
 	}
 }
