@@ -765,6 +765,8 @@ MonoBehaviour:
   player: {fileID: 250127546}
   startPanel: {fileID: 1458342856}
   scorePanel: {fileID: 2067103531}
+  paused: 0
+  gameOver: 0
   thrust: 1
   topSpeed: 2
   lives: 3
@@ -780,14 +782,15 @@ MonoBehaviour:
   endHighscoreTextOBJ: {fileID: 183408192}
   playerObject: {fileID: 250127542}
   fireSprite: {fileID: 1097900006}
+  loops: 0
   highscore: 0
+  inGameOverMenu: 0
+  inMainMenu: 1
   pausedPanel: {fileID: 1898398471}
   three: {fileID: 1951407772}
   two: {fileID: 295343894}
   one: {fileID: 1089616701}
-  stats_highscore: 0
-  stats_shotsFired: 0
-  stats_gamesPlayed: 0
+  resumingGame: 0
 --- !u!212 &250127544
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -850,7 +853,7 @@ Transform:
   - {fileID: 373710355}
   - {fileID: 1097900007}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &250127546
 Rigidbody2D:
@@ -1396,7 +1399,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &522121315
 GameObject:
@@ -1958,7 +1961,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &805397455
 GameObject:
@@ -2867,7 +2870,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1605562322}
+      - m_Target: {fileID: 1948285306}
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -2948,7 +2951,7 @@ Transform:
   - {fileID: 99754010}
   - {fileID: 501498778}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1134930006
 GameObject:
@@ -3601,7 +3604,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1589610018
 GameObject:
@@ -4184,7 +4187,7 @@ Transform:
   - {fileID: 43266898}
   - {fileID: 1053846486}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1785933403
 GameObject:
@@ -4625,6 +4628,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909686619}
   m_CullTransparentMesh: 0
+--- !u!1 &1948285305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1948285307}
+  - component: {fileID: 1948285306}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1948285306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948285305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7496e1be12372f4fb57959ba544fff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats_highscore: 0
+  stats_shotsFired: 0
+  stats_gamesPlayed: 0
+--- !u!4 &1948285307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948285305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 430.15344, y: 192.34308, z: -1.8668563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1951407772
 GameObject:
   m_ObjectHideFlags: 0

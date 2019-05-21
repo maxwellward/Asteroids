@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
 
 	private UI userInterface;
-
+	private GameManager gameManagerScript;
 
 	public float speed;
 	public GameObject bulletPrefab;
@@ -16,9 +16,7 @@ public class PlayerManager : MonoBehaviour
 	
 	public Rigidbody2D player; // A refrence to the player object.
 
-	public GameObject startPanel;
-	public GameObject scorePanel;
-
+	
 	private Enemies enemyScript;
 
 	
@@ -26,21 +24,22 @@ public class PlayerManager : MonoBehaviour
 	// Start is run on game start.
 	private void Start()
 	{
+		gameManagerScript = FindObjectOfType<GameManager>();
 		userInterface = FindObjectOfType<UI>();        
 
 		highscore = PlayerPrefs.GetFloat("Highscore");
-		stats_shotsFired = PlayerPrefs.GetInt("stats_shotsFired");
-		stats_gamesPlayed = PlayerPrefs.GetInt("stats_gamesPlayed");
+		gameManagerScript.stats_shotsFired = PlayerPrefs.GetInt("stats_shotsFired");
+		gameManagerScript.stats_gamesPlayed = PlayerPrefs.GetInt("stats_gamesPlayed");
 		
 
-		UpdateStats();
+		gameManagerScript.UpdateStats();
 
 		StartCoroutine("WaitToPlaySoundtrack");
-		inMainMenu = true;
+		gameManagerScript.inMainMenu = true;
 		Time.timeScale = 0;
 		player.GetComponent<Renderer>().enabled = false;
-		scorePanel.SetActive(false);
-		startPanel.SetActive(true);
+		userInterface.scorePanel.SetActive(false);
+		userInterface.startPanel.SetActive(true);
 		// Sets the score to give to 100, which can then be modified by missing or hitting shots.
 		Shoot.scoreToGive = 100f;
 
@@ -53,63 +52,8 @@ public class PlayerManager : MonoBehaviour
 			FindObjectOfType<AudioManager>().Play("Soundtrack");
 	}
 
-	public void StartGame()
-	{
-		isBlinking = false;
-		lives = 3; // CHANGE THIS TO 3
 
-		FindObjectOfType<AudioManager>().Play("Coin");
-
-		inGame = true;
-		inMainMenu = false;
-
-		Time.timeScale = 1;
-		player.GetComponent<Renderer>().enabled = true;
-		scorePanel.SetActive(true);
-		startPanel.SetActive(false);
-		fireSprite.GetComponent<Renderer>().enabled = false;
-	}
-
-	public void RestartGame()
-	{
-		lives = 3;
-
-		FindObjectOfType<AudioManager>().Play("Coin");
-
-		isBlinking = false;
-
-		life1.enabled = true;
-		life2.enabled = true;
-		life3.enabled = true;
-
-		inGame = true;
-		inMainMenu = false;
-
-		Shoot.score = 0;
-		Time.timeScale = 1;
-		player.GetComponent<Renderer>().enabled = true;
-		gameOverPanel.SetActive(false);
-
-		Vector3 restartPosition = new Vector3(0, 0, 0);
-		player.transform.position = (restartPosition);
-		player.transform.rotation = Quaternion.Euler(restartPosition.x, restartPosition.y, restartPosition.z);
-
-		player.velocity = Vector3.zero;
-		player.angularVelocity = 0;
-
-		enemyScript = FindObjectOfType<Enemies>();
-		enemyScript.StopParticles();
-
-		gameOver = false;
-		scoreText.SetActive(true);
-		Shoot.scoreToGive = 100f;
-		
-		loops = 0;
-
-		DestroyAll();
-	}
-
-	void DestroyAll()
+	public void DestroyAll()
 	{
 		GameObject [] foundBullets = GameObject.FindGameObjectsWithTag("Bullet");
 
@@ -155,9 +99,9 @@ public class PlayerManager : MonoBehaviour
 	// Update is called every frame, so these functions are run and checked every frame (60 times a second usually).
 	// Checks if the player is firing, and if they're allowed to move at the end of the game.
 
-	bool paused = false;
+	public bool paused = false;
 
-	bool gameOver; // True or false, is the game over? aka. has the player died?
+	
 	void Update()
 	{
 
@@ -179,7 +123,7 @@ public class PlayerManager : MonoBehaviour
 			Fire();
 		}
 
-		if (gameOver == true) // Check if the game is over
+		if (gameManagerScript.gameOver == true) // Check if the game is over
 		{
 			return; // Do nothing
 		}
@@ -191,7 +135,7 @@ public class PlayerManager : MonoBehaviour
 		
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			if(isBlinking == false && paused == false)
+			if(gameManagerScript.isBlinking == false && paused == false)
 			{
 				FindObjectOfType<AudioManager>().Play("Thrust");
 			}
@@ -211,7 +155,7 @@ public class PlayerManager : MonoBehaviour
 
 	void Movement()
 	{
-		if (isBlinking == false && inMainMenu == false && gameOver == false && paused == false)
+		if (gameManagerScript.isBlinking == false && gameManagerScript.inMainMenu == false && gameManagerScript.gameOver == false && gameManagerScript.paused == false)
 		{
 			// Right turn
 			if (Input.GetKey(KeyCode.RightArrow))
@@ -263,15 +207,7 @@ public class PlayerManager : MonoBehaviour
 
 
 	// PLAYER DEATH
-
-	public int lives;
-
-	public Image life1;
-	public Image life2;
-	public Image life3;
-
-	public GameObject scoreText;
-	public GameObject gameOverPanel;
+	
 	public Text endScoreText;
 	public Text endHighscoreText;
 	public Text highscoreMenu;
@@ -324,8 +260,8 @@ public class PlayerManager : MonoBehaviour
 		
 	}
 
-	int loops;
-	bool isBlinking = false;
+	
+	
 
 	IEnumerator BlinkObj()
 	{
@@ -379,10 +315,10 @@ public class PlayerManager : MonoBehaviour
 				loops++;
 			}
 
-			stats_gamesPlayed++;
-			PlayerPrefs.SetInt("stats_shotsFired", stats_shotsFired);
-			PlayerPrefs.SetInt("stats_gamesPlayed", stats_gamesPlayed);
-			UpdateStats();
+			gameManagerScript.stats_gamesPlayed++;
+			PlayerPrefs.SetInt("stats_shotsFired", gameManagerScript.stats_shotsFired);
+			PlayerPrefs.SetInt("stats_gamesPlayed", gameManagerScript.stats_gamesPlayed);
+			gameManagerScript.UpdateStats();
 
 			scoreText.SetActive(false);
 
@@ -418,9 +354,9 @@ public class PlayerManager : MonoBehaviour
 
 
 	// SHOOTING
-	bool inGameOverMenu = false;
-	bool inMainMenu = true;
-	bool inGame = false;
+	public bool inGameOverMenu = false;
+	
+	
 	void Fire()
 	{
 		
@@ -431,8 +367,8 @@ public class PlayerManager : MonoBehaviour
 			{
 				if (inGame == true)
 				{
-					stats_shotsFired++;
-					PlayerPrefs.SetInt("stats_shotsFired", stats_shotsFired);
+					gameManagerScript.stats_shotsFired++;
+					PlayerPrefs.SetInt("stats_shotsFired", gameManagerScript.stats_shotsFired);
 					FindObjectOfType<AudioManager>().Play("Shoot");
 					Instantiate(bulletPrefab, shootLoc.position, shootLoc.rotation);
 				}
@@ -450,7 +386,7 @@ public class PlayerManager : MonoBehaviour
 				if(inGameOverMenu == true)
 				{
 					gameOverPanel.SetActive(false);
-					RestartGame();
+					gameManagerScript.RestartGame();
 					inGameOverMenu = false;
 				}
 			}
@@ -460,48 +396,7 @@ public class PlayerManager : MonoBehaviour
 
 	// BACK TO MENU BUTTON.
 
-	public void ReturnToMenu()
-	{
-		pausedPanel.SetActive(false);
-		Time.timeScale = 1;
-		paused = false;
-		resumingGame = false;
-
-		life1.enabled = true;
-		life2.enabled = true;
-		life3.enabled = true;
-
-		inGameOverMenu = false;
-		inMainMenu = true;
-
-		gameOverPanel.SetActive(false);
-		startPanel.SetActive(true);
-
-		Shoot.score = 0;
-		
-
-		Vector3 restartPosition = new Vector3(0, 0, 0);
-		player.transform.position = (restartPosition);
-		player.transform.rotation = Quaternion.Euler(restartPosition.x, restartPosition.y, restartPosition.z);
-
-		player.velocity = Vector3.zero;
-		player.angularVelocity = 0;
-
-		enemyScript = FindObjectOfType<Enemies>();
-		enemyScript.StopParticles();
-
-		gameOver = false;
-		scoreText.SetActive(true);
-		Shoot.scoreToGive = 100f;
-		
-		loops = 0;
-
-		DestroyAll();
-
-		stats_gamesPlayed++;
-		PlayerPrefs.SetInt("stats_gamesPlayed", stats_gamesPlayed);
-		UpdateStats();
-	}
+	
 
 
 
@@ -530,7 +425,7 @@ public class PlayerManager : MonoBehaviour
 		
 	}
 
-	bool resumingGame = false;
+	public bool resumingGame = false;
 	IEnumerator ResumeGame()
 		{
 				resumingGame = true;
@@ -549,18 +444,4 @@ public class PlayerManager : MonoBehaviour
 				paused = false;
 				resumingGame = false;
 		}
-
-// STATS
-
-	public float stats_highscore;
-	public int stats_shotsFired;
-	public int stats_gamesPlayed;
-
-	public void UpdateStats()
-	{
-		userInterface.text_highscore.text = highscore.ToString();
-		userInterface.text_shotsFired.text = stats_shotsFired.ToString();
-		userInterface.text_gamesPlayed.text = stats_gamesPlayed.ToString();
-	}
-
 }

@@ -5,18 +5,33 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public Text scoreText;
 
-    // Stats
+    private Enemies enemyScript;
+    private GameManager gameManagerScript;
+
+    // SCORE
+    public Text scoreText;
+    public GameObject scoreTextObj;
+
+    // STATS
     public Text text_highscore;
     public Text text_shotsFired;
     public Text text_asteroidsHit;
     public Text text_asteroidsMissed;
     public Text text_gamesPlayed;
 
+    // GAME MANAGER
+    public GameObject startPanel;
+	public GameObject scorePanel;
+    public GameObject gameOverPanel;
+
+
     void Start()
     {
+
+        enemyScript = FindObjectOfType<Enemies>();
         // Stats
+        gameManagerScript = FindObjectOfType<GameManager>();
         playerScript = FindObjectOfType<PlayerManager>();
 
         // Easter egg
@@ -68,14 +83,7 @@ public class UI : MonoBehaviour
         scoreText.text = "Score: " + Shoot.score;
     }
 
-    public void QuitGame()
-    {
-        Debug.Log("Quit Game");
-        PlayerPrefs.SetFloat("GamesPlayed", playerScript.stats_gamesPlayed);
-        PlayerPrefs.SetFloat("ShotsFired", playerScript.stats_shotsFired);
-        Debug.Log("Set values");
-        Application.Quit();
-    }
+    
 
 // STATS PAGE
 
@@ -85,7 +93,7 @@ public class UI : MonoBehaviour
 
     public void LoadStatsPage()
     {
-        playerScript.startPanel.SetActive(false);
+        startPanel.SetActive(false);
         statsCanvas.SetActive(true);
     }
 
@@ -108,20 +116,19 @@ public class UI : MonoBehaviour
         }
         else
         {
-            playerScript.stats_gamesPlayed = 0;
-			playerScript.stats_shotsFired = 0;
+            gameManagerScript.stats_gamesPlayed = 0;
+			gameManagerScript.stats_shotsFired = 0;
 			playerScript.highscore = 0;
             
-			Debug.Log("stats cleared = " + playerScript.stats_gamesPlayed + "& shots" + playerScript.stats_shotsFired + "highscore+" + playerScript.highscore);
-			playerScript.UpdateStats();
+			gameManagerScript.UpdateStats();
 
             stats_confirmStage = false;
             resetButton.SetActive(true);
             confirmButton.SetActive(false);
 
             PlayerPrefs.SetFloat("Highscore", playerScript.highscore);
-		    PlayerPrefs.SetInt("stats_shotsFired", playerScript.stats_shotsFired);
-		    PlayerPrefs.SetInt("stats_gamesPlayed", playerScript.stats_gamesPlayed);
+		    PlayerPrefs.SetInt("stats_shotsFired", gameManagerScript.stats_shotsFired);
+		    PlayerPrefs.SetInt("stats_gamesPlayed", gameManagerScript.stats_gamesPlayed);
         }
     }
 
@@ -184,5 +191,51 @@ public class UI : MonoBehaviour
             Debug.Log("yeet");
         }    
     }
+
+// MENUS
+
+    public void ReturnToMenu()
+	{
+		playerScript.pausedPanel.SetActive(false);
+		Time.timeScale = 1;
+		playerScript.paused = false;
+		playerScript.resumingGame = false;
+
+		playerScript.life1.enabled = true;
+		playerScript.life2.enabled = true;
+		playerScript.life3.enabled = true;
+
+		playerScript.inGameOverMenu = false;
+		playerScript.inMainMenu = true;
+
+		playerScript.gameOverPanel.SetActive(false);
+		playerScript.startPanel.SetActive(true);
+
+		Shoot.score = 0;
+		
+
+		Vector3 restartPosition = new Vector3(0, 0, 0);
+		playerScript.player.transform.position = (restartPosition);
+		playerScript.player.transform.rotation = Quaternion.Euler(restartPosition.x, restartPosition.y, restartPosition.z);
+
+		playerScript.player.velocity = Vector3.zero;
+		playerScript.player.angularVelocity = 0;
+
+		enemyScript = FindObjectOfType<Enemies>();
+		enemyScript.StopParticles();
+
+		playerScript.gameOver = false;
+		playerScript.scoreText.SetActive(true);
+		Shoot.scoreToGive = 100f;
+		
+		playerScript.loops = 0;
+
+		playerScript.DestroyAll();
+
+		gameManagerScript.stats_gamesPlayed++;
+		PlayerPrefs.SetInt("stats_gamesPlayed", gameManagerScript.stats_gamesPlayed);
+		gameManagerScript.UpdateStats();
+	}
+
 
 }
