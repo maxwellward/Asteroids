@@ -110,8 +110,8 @@ public class Shoot : MonoBehaviour
 
         FindObjectOfType<AudioManager>().Play("Small");
 
-        Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-        Instantiate(asteroidTwo, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        Instantiate(asteroidTwo, -asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        Instantiate(asteroidTwo, -asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
     }
 
@@ -121,8 +121,8 @@ public class Shoot : MonoBehaviour
 
         FindObjectOfType<AudioManager>().Play("Medium");
 
-        Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-        Instantiate(asteroidThree, asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        Instantiate(asteroidThree, -asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        Instantiate(asteroidThree, -asteroidPosition, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
     }
 

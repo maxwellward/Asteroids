@@ -7,7 +7,6 @@ public class PlayerManager : MonoBehaviour
 {
 
 	private UI userInterface;
-	private GameManager gameManagerScript;
 
 	public float speed;
 	public GameObject bulletPrefab;
@@ -16,22 +15,19 @@ public class PlayerManager : MonoBehaviour
 	
 	public Rigidbody2D player; // A refrence to the player object.
 
-	
-	private Enemies enemyScript;
+	public GameManager gameManagerScript;
 
 	
 
 	// Start is run on game start.
 	private void Start()
 	{
-		gameManagerScript = FindObjectOfType<GameManager>();
 		userInterface = FindObjectOfType<UI>();        
 
 		highscore = PlayerPrefs.GetFloat("Highscore");
 		gameManagerScript.stats_shotsFired = PlayerPrefs.GetInt("stats_shotsFired");
 		gameManagerScript.stats_gamesPlayed = PlayerPrefs.GetInt("stats_gamesPlayed");
 		
-
 		gameManagerScript.UpdateStats();
 
 		StartCoroutine("WaitToPlaySoundtrack");
@@ -152,25 +148,26 @@ public class PlayerManager : MonoBehaviour
 
 	public float thrust; // How much force is used when you press up arrow.
 	public float topSpeed; // The maximum speed that the player can go.
+	public float rotationalSpeed; // The speed at which the player rotates
 
 	void Movement()
 	{
-		if (gameManagerScript.isBlinking == false && gameManagerScript.inMainMenu == false && gameManagerScript.gameOver == false && gameManagerScript.gameManagerScript.paused == false)
+		if (gameManagerScript.isBlinking == false && gameManagerScript.inMainMenu == false && gameManagerScript.gameOver == false && gameManagerScript.paused == false)
 		{
 			// Right turn
 			if (Input.GetKey(KeyCode.RightArrow))
 			{
-				transform.Rotate(0, 0, -3, Space.World);
+				transform.Rotate(0, 0, -rotationalSpeed, Space.World);
 			}
 			// Left turn
 			if (Input.GetKey(KeyCode.LeftArrow))
 			{
-				transform.Rotate(0, 0, 3, Space.World);
+				transform.Rotate(0, 0, rotationalSpeed, Space.World);
 			}
 			// Forward Thrust
 			if (Input.GetKey(KeyCode.UpArrow))
 			{
-				if (isBlinking == false)
+				if (gameManagerScript.isBlinking == false)
 				{
 					player.AddForce(transform.up * thrust);
 					fireSprite.GetComponent<Renderer>().enabled = true;
@@ -222,23 +219,23 @@ public class PlayerManager : MonoBehaviour
 
 	void LoseLife()
 	{
-		isBlinking = false;
-		lives = (lives - 1);
+		gameManagerScript.isBlinking = false;
+		gameManagerScript.lives = gameManagerScript.lives - 1;
 		DestroyAll();
 		Time.timeScale = 1;
-		loops = 0;
+		gameManagerScript.loops = 0;
 
-		if (lives == 2)
+		if (gameManagerScript.lives == 2)
 		{
-		   life1.enabled = false;
+			gameManagerScript.life1.enabled = false;
 		} 
-		else if (lives == 1)
+		else if (gameManagerScript.lives == 1)
 		{
-			life2.enabled = false;
+			gameManagerScript.life2.enabled = false;
 		}
-		else if (lives == 0)
+		else if (gameManagerScript.lives == 0)
 		{
-			life3.enabled = false;
+			gameManagerScript.life3.enabled = false;
 		}
 
 	}
@@ -246,7 +243,7 @@ public class PlayerManager : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D col)
 	{
 
-		if( gameOver == false)
+		if(gameManagerScript.gameOver == false)
 		{
 			if (col.gameObject.tag == "Asteroid" || col.gameObject.tag == "AsteroidSmall" || col.gameObject.tag == "AsteroidTiny" || col.gameObject.tag == "Bullet")
 			{
@@ -265,16 +262,16 @@ public class PlayerManager : MonoBehaviour
 
 	IEnumerator BlinkObj()
 	{
-		isBlinking = true;
+		gameManagerScript.isBlinking = true;
 
-		if(lives > 0)
+		if(gameManagerScript.lives > 0)
 		{
 
 			fireSprite.GetComponent<Renderer>().enabled = false;
 			player.GetComponent<Renderer>().enabled = false;
 			killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-			while (loops < 3)
+			while (gameManagerScript.loops < 3)
 			{
 				yield return new WaitForSecondsRealtime(0.5f);
 				player.GetComponent<Renderer>().enabled = true;
@@ -283,7 +280,7 @@ public class PlayerManager : MonoBehaviour
 				player.GetComponent<Renderer>().enabled = false;
 				killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-				loops++;
+				gameManagerScript.loops++;
 			}
 
 			Vector3 restartPosition = new Vector3(0, 0, 0);
@@ -293,17 +290,17 @@ public class PlayerManager : MonoBehaviour
 			player.GetComponent<Renderer>().enabled = true;
 
 			LoseLife();
-			Debug.Log("Lives" + lives);
+			Debug.Log("Lives" + gameManagerScript.lives);
 		}
 		else
 		{
-			gameOver = true;
+			gameManagerScript.gameOver = true;
 
 			fireSprite.GetComponent<Renderer>().enabled = false;
 			player.GetComponent<Renderer>().enabled = false;
 			killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-			while (loops < 5)
+			while (gameManagerScript.loops < 5)
 			{
 				yield return new WaitForSecondsRealtime(0.5f);
 				player.GetComponent<Renderer>().enabled = true;
@@ -312,7 +309,7 @@ public class PlayerManager : MonoBehaviour
 				player.GetComponent<Renderer>().enabled = false;
 				killerAsteroid.GetComponent<Renderer>().enabled = false;
 
-				loops++;
+				gameManagerScript.loops++;
 			}
 
 			gameManagerScript.stats_gamesPlayed++;
@@ -320,7 +317,8 @@ public class PlayerManager : MonoBehaviour
 			PlayerPrefs.SetInt("stats_gamesPlayed", gameManagerScript.stats_gamesPlayed);
 			gameManagerScript.UpdateStats();
 
-			scoreText.SetActive(false);
+			// FIX THIS
+			//userInterface.scoreText.SetActive(false);
 
 			endScoreTextOBJ.SetActive(true);
 			endScoreText.text = "Score: " + Shoot.score;
@@ -328,9 +326,9 @@ public class PlayerManager : MonoBehaviour
 			HighscoreCheck();
 			endHighscoreTextOBJ.SetActive(true);
 
-			gameOverPanel.SetActive(true);
+			userInterface.gameOverPanel.SetActive(true);
 
-			isBlinking = false;
+			gameManagerScript.isBlinking = false;
 
 			
 
@@ -360,12 +358,12 @@ public class PlayerManager : MonoBehaviour
 	void Fire()
 	{
 		
-		if (isBlinking == false && inMainMenu == false && gameOver == false)
+		if (gameManagerScript.isBlinking == false && gameManagerScript.inMainMenu == false && gameManagerScript.gameOver == false)
 		{
 		
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				if (inGame == true)
+				if (gameManagerScript.inGame == true)
 				{
 					gameManagerScript.stats_shotsFired++;
 					PlayerPrefs.SetInt("stats_shotsFired", gameManagerScript.stats_shotsFired);
@@ -377,15 +375,15 @@ public class PlayerManager : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.Space))
 			{
-				if (inMainMenu == true)
+				if (gameManagerScript.inMainMenu == true)
 				{
-					
-					StartGame();
+
+				gameManagerScript.StartGame();
 
 				}
 				if(inGameOverMenu == true)
 				{
-					gameOverPanel.SetActive(false);
+					userInterface.gameOverPanel.SetActive(false);
 					gameManagerScript.RestartGame();
 					inGameOverMenu = false;
 				}
@@ -411,7 +409,7 @@ public class PlayerManager : MonoBehaviour
 	void PauseGame(){
 		if (resumingGame == false)
 		{
-			gameManagerScript.pausedPanel.SetActive(true);
+			pausedPanel.SetActive(true);
 			Time.timeScale = 0;
 			gameManagerScript.paused = true;
 			fireSprite.GetComponent<Renderer>().enabled = false;
@@ -420,7 +418,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
 	void UnpauseGame(){
-		gameManagerScript.pausedPanel.SetActive(false);
+		pausedPanel.SetActive(false);
 		StartCoroutine("ResumeGame");
 		
 	}

@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
 
     private Enemies enemyScript;
     private GameManager gameManagerScript;
+    private UI userInterface;
 
     // SCORE
     public Text scoreText;
@@ -33,52 +34,10 @@ public class UI : MonoBehaviour
         // Stats
         gameManagerScript = FindObjectOfType<GameManager>();
         playerScript = FindObjectOfType<PlayerManager>();
-
-        // Easter egg
-        egg_buttonToCatch.gameObject.SetActive(false);
-        egg_linkText.SetActive(false);
-
-        // Console
-        DeveloperConsole.SetActive(false);
-        consoleActive = false;
     }
-
-    bool consoleActive = false;
-    public string output;
-    public InputField ConsoleInput;
-    public GameObject DeveloperConsole;
-
 
     void Update()
     {
-        
-        // Developer Console
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-
-            if (consoleActive == false)
-            {
-                DeveloperConsole.SetActive(true);
-                consoleActive = true;
-            }
-            else
-            {
-                DeveloperConsole.SetActive(false);
-                consoleActive = false;
-            }
-
-        }
-        if (consoleActive == true)
-        {
-            
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                output = ConsoleInput.text; 
-                ConsoleInput.text = "";
-                InputCheck();
-            }
-        }
-
         // Score
         scoreText.text = "Score: " + Shoot.score;
     }
@@ -133,83 +92,24 @@ public class UI : MonoBehaviour
     }
 
 
-// EASTER EGG #1
-
-    public GameObject egg_linkText;
-
-    public Transform egg_asteroidToExpand;
-    int egg_timesPressed;
-    public void EasterEgg()
-    {
-        egg_timesPressed++;
-        if (egg_timesPressed == 120) // CHANGE THIS TO 120
-        {
-            StartCoroutine("egg_TeleportBall");
-            egg_buttonToCatch.gameObject.SetActive(true);
-            Destroy(egg_asteroidToExpand.gameObject);
-        }
-
-        egg_asteroidToExpand.localScale += new Vector3(1, 1, 1);
-    }
-
-// Catch me ball
-    bool ballCaught = false;
-    public Transform egg_buttonToCatch;
-
-    public void egg_BallCaught()
-    {
-        ballCaught = true;
-        Debug.Log("nice");
-        Destroy(egg_buttonToCatch.gameObject);
-        egg_linkText.SetActive(true);
-    }
-
-    IEnumerator egg_TeleportBall()
-    {
-        while(ballCaught == false){
-            if (ballCaught == false)
-            {
-                yield return new WaitForSecondsRealtime(1f);
-                egg_buttonToCatch.transform.position = new Vector3(Random.Range(-684, 857), Random.Range(415, -415), 0);
-            }
-        }
-    }
-    
-// ----
-
-
-
-
-// DEV CONSOLE COMMANDS
-// DEV CONSOLE COMMANDS
-// DEV CONSOLE COMMANDS
-
-    void InputCheck()
-    {
-        if (output == "hello")
-        {
-            Debug.Log("yeet");
-        }    
-    }
-
 // MENUS
 
     public void ReturnToMenu()
 	{
 		playerScript.pausedPanel.SetActive(false);
 		Time.timeScale = 1;
-		playerScript.paused = false;
+        gameManagerScript.paused = false;
 		playerScript.resumingGame = false;
 
-		playerScript.life1.enabled = true;
-		playerScript.life2.enabled = true;
-		playerScript.life3.enabled = true;
+        gameManagerScript.life1.enabled = true;
+        gameManagerScript.life2.enabled = true;
+        gameManagerScript.life3.enabled = true;
 
 		playerScript.inGameOverMenu = false;
-		playerScript.inMainMenu = true;
+        gameManagerScript.inMainMenu = true;
 
-		playerScript.gameOverPanel.SetActive(false);
-		playerScript.startPanel.SetActive(true);
+        userInterface.gameOverPanel.SetActive(false);
+        userInterface.startPanel.SetActive(true);
 
 		Shoot.score = 0;
 		
@@ -224,11 +124,11 @@ public class UI : MonoBehaviour
 		enemyScript = FindObjectOfType<Enemies>();
 		enemyScript.StopParticles();
 
-		playerScript.gameOver = false;
-		playerScript.scoreText.SetActive(true);
+		gameManagerScript.gameOver = false;
+        //userInterface.scoreText.SetActive(true);
 		Shoot.scoreToGive = 100f;
-		
-		playerScript.loops = 0;
+
+        gameManagerScript.loops = 0;
 
 		playerScript.DestroyAll();
 

@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
 
     // VARIABLES
-
     public int lives;
     public Image life1;
 	public Image life2;
@@ -43,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public void UpdateStats()
 	{
+		userInterface = FindObjectOfType<UI>();
+        playerScript = FindObjectOfType<PlayerManager>();
 		userInterface.text_highscore.text = playerScript.highscore.ToString();
 		userInterface.text_shotsFired.text = stats_shotsFired.ToString();
 		userInterface.text_gamesPlayed.text = stats_gamesPlayed.ToString();
